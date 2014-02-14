@@ -10,15 +10,14 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITEURL = 'http://syntax-fehler.de'
+SITEURL = 'http://euer.krebsco.de'
 RELATIVE_URLS = True
 
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
-CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
-
-DELETE_OUTPUT_DIRECTORY = True
+DELETE_OUTPUT_DIRECTORY = False
 
 # Following items are often useful when publishing
 
-#DISQUS_SITENAME = ""
+DISQUS_SITENAME = 'euer'
 #GOOGLE_ANALYTICS = ""
+PIWIK_URL='mediengewitter.krebsco.de:10000'
+PIWIK_SITE_ID=1

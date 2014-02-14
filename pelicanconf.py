@@ -3,29 +3,55 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'makefu'
-SITENAME = 'only code is pure'
-SITEURL = 'http://syntax-fehler.de'
+SITENAME = 'Adventures in NixOS Unstable'
+SITEURL = 'http://nixos.unstable.krebsco.de/'
 #SITESUBTITLE = 'A collection of pseudocode snippets'
 
 TIMEZONE = 'Europe/Berlin'
 THEME = './pelican-themes/gum/'
 DEFAULT_LANG = 'en'
-DEFAULT_CATEGORY = 'misc'
+#DEFAULT_CATEGORY = 'misc'
 # Feed generation is usually not desired when developing
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
+FEED_ALL_ATOM = 'atom.xml'
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
-# Blogroll
-STATIC_PATHS = [ 'extra/robots.txt', ]
+STATIC_PATHS = ['extra/robots.txt','extra','img']
 EXTRA_PATH_METADATA = { 'extra/robots.txt': {'path': 'robots.txt'}, }
 
-LINKS =  (('exco\'s blog', 'http://excogitation.de'),
+# Blogroll
+LINKS =  (
+        ('my tech blog', 'http://euer.krebsco.de'),
+        ('exco\'s blog', 'http://excogitation.de'),
         ('Binaergewitter', 'http://krepel.us'),)
 
 # Social widget
 SOCIAL = (('@makefoo', 'http://twitter.com/makefoo') ,)
 DEFAULT_PAGINATION = 10
 
+DISQUS_SITENAME = 'nixos-unstable'
+#GOOGLE_ANALYTICS = ""
+PIWIK_URL='mediengewitter.krebsco.de:10000'
+PIWIK_SITE_ID=2
+
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
-MENUITEMS = (( 'RSS', '/feeds/all.atom.xml'),)
+MENUITEMS = ( ( 'Wiki', 'http://wiki.euer.krebsco.de/makefu.html'), )
+
+READERS = {"html": None}
+
+PLUGIN_PATHS = ['plugins',]
+PLUGINS=['sitemap',]
+
+SITEMAP = {
+    'format': 'xml',
+    'priorities': {
+        'articles': 0.5,
+        'indexes': 0.5,
+        'pages': 0.5
+    },
+    'changefreqs': {
+        'articles': 'monthly',
+        'indexes': 'daily',
+        'pages': 'monthly'
+    }
+}

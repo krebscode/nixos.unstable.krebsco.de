@@ -1,0 +1,19 @@
+language: python
+
+install:
+- pip install pelican ghp-import markdown
+
+script:
+- pelican
+
+deploy:
+  - provider: script
+    script: ci/to-ghp.sh
+    skip_cleanup: true
+    on:
+      branch: master
+
+
+env:
+  global:
+    secure: q6GnQlJs0bvYuSsr8UGOXc3IwOi+WNb/n8xZBiyOHaw4GwO0jjwTZ++7r9W9NpXDDlduYgjeKDvUw4RHULArww3guYECzhehDB+2AYzlSaL4E8edIB0cr4bqAf5uEriSBYB056R5FAxnRUy5tnRmR0yMu1fo6A1RJLp3MZsSFbbyQif5hjtqmXb+LynFloKiBLLSHlfwFVPNPHYy6JBTvgNw3v2Ok/zVE7j9vM7kOK3BGRbt9advpl87s7oR2JkjJUtPZZxvOZZcuQUQqbDOjrKWkL/+SwNlBKRB8xO0Xa1QwFY8NCBdsIkQd2rFoKs3ywrrqZLrrV8AwoGiLQXYN1DYdtGSGE5GOJYn2kb0ywbf2UalcTIwvd3ExQvAEXBFpZryBtv37HQe5Rp9WqY0RV7dZvvSpMQ4OUjxogRYtHqOyBsXzQ5Gj/aRKSk+Wj9KopBGrfCPlsGJzvPgftQlG37IK4OhnCNGpPyF6a/1oaZVZUaUYwR1fhrX1qEgTKRmhpxW+XJ0cS6SIcxm0cwNei7REj85QtbBb9pzzMjNdmgGMEcvqoIeBBW2bQ8Jq/sxvwUYe7P9NPOOACDHv0pVKKiC6atIohim+qAQh28O/Tx73TRDcqNDjbHbcdYVG244/L22P2n4e0KIfG/eE5kwgfTbRMycV1iyMxth2q24pAU=
