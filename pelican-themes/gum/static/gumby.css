@@ -21,6 +21,10 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
+.sidebar li{
+  list-style: none;
+}
+
 html {
   line-height: 1;
 }
@@ -1025,7 +1029,6 @@ img {
     width: 46px;
     position: absolute;
     text-align: center;
-    list-style: none;
     display: inline-block;
     color: white;
     background: #4a4d50;
