@@ -254,7 +254,7 @@ ul, ol {
 }
 
 ul {
-  list-style: none outside;
+  list-style: circle inside;
 }
 
 ol {
@@ -1025,6 +1025,7 @@ img {
     width: 46px;
     position: absolute;
     text-align: center;
+    list-style: none;
     display: inline-block;
     color: white;
     background: #4a4d50;
