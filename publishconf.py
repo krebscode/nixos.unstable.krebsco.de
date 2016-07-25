@@ -10,14 +10,14 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITEURL = 'http://euer.krebsco.de'
+SITEURL = 'http://nixos.unstable.krebsco.de'
 RELATIVE_URLS = True
 
 DELETE_OUTPUT_DIRECTORY = False
 
 # Following items are often useful when publishing
 
-DISQUS_SITENAME = 'euer'
-#GOOGLE_ANALYTICS = ""
+DISQUS_SITENAME = 'nixos-unstable'
+GOOGLE_ANALYTICS = "UA-81296513-1"
 PIWIK_URL='mediengewitter.krebsco.de:10000'
-PIWIK_SITE_ID=1
+PIWIK_SITE_ID=2

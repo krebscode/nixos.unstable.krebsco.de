@@ -3,17 +3,18 @@ language: python
 install:
 - pip install pelican ghp-import markdown
 
-script:
-- pelican
+script: # build that shit
+- pelican content/
 
 deploy:
-  - provider: script
-    script: ci/to-ghp.sh
-    skip_cleanup: true
-    on:
-      branch: master
-
+- provider: script
+  script: ci/to-ghp.sh
+  skip_cleanup: true
+  on:
+    branch: master
 
 env:
   global:
-    secure: q6GnQlJs0bvYuSsr8UGOXc3IwOi+WNb/n8xZBiyOHaw4GwO0jjwTZ++7r9W9NpXDDlduYgjeKDvUw4RHULArww3guYECzhehDB+2AYzlSaL4E8edIB0cr4bqAf5uEriSBYB056R5FAxnRUy5tnRmR0yMu1fo6A1RJLp3MZsSFbbyQif5hjtqmXb+LynFloKiBLLSHlfwFVPNPHYy6JBTvgNw3v2Ok/zVE7j9vM7kOK3BGRbt9advpl87s7oR2JkjJUtPZZxvOZZcuQUQqbDOjrKWkL/+SwNlBKRB8xO0Xa1QwFY8NCBdsIkQd2rFoKs3ywrrqZLrrV8AwoGiLQXYN1DYdtGSGE5GOJYn2kb0ywbf2UalcTIwvd3ExQvAEXBFpZryBtv37HQe5Rp9WqY0RV7dZvvSpMQ4OUjxogRYtHqOyBsXzQ5Gj/aRKSk+Wj9KopBGrfCPlsGJzvPgftQlG37IK4OhnCNGpPyF6a/1oaZVZUaUYwR1fhrX1qEgTKRmhpxW+XJ0cS6SIcxm0cwNei7REj85QtbBb9pzzMjNdmgGMEcvqoIeBBW2bQ8Jq/sxvwUYe7P9NPOOACDHv0pVKKiC6atIohim+qAQh28O/Tx73TRDcqNDjbHbcdYVG244/L22P2n4e0KIfG/eE5kwgfTbRMycV1iyMxth2q24pAU=
+    # Change if required
+    - GH_REPO=nixos.unstable.krebsco.de
+    - secure: s83zyRJ1WvPNi+1y98Ds/03qKVvzDzkyHorrQE/80Bay/CoCXVHL5dlvSz8HB8TE70ojkBJM8imb+h9ToEXn0joa/pUko72zytRCWXTGkYT/Xn/0RGjI/KY+cdbGhFjw9TOVy+cO3eS19NzwtBJG1nf1roowrsMyg7Wvceafpd0aY+J/dRq/TrW528ooqeivslsnY3USOsuZRnJPTxp2aqXQXi4zNKZ04CZtIMG6AH8DWH/OBwc03qp9Xw2ifERVf4k5IVXK+ezKJlgP4ZeOneNAgzoc0b7qQIggehl5HtK6ROg4Pkm3Y3ksyGdz8NQNTWINkISU7HUNKejUbfr2FUsAjq2dn1OhTceIvmF45anPkBJO1/4Qhz3DzvrwpTGmZUiA0VFdubT90WApWHaPrKX0KM5JU+JVapPPHTS3k6LW0wEIu79/27c1HXaj1M+gdgvVnODN3pSHFKDp+OctMiaoYgM0CsJPqKCWMyEw89lmFBdxSgtjRtAduoFt6VHxO9m0E7g2c5gYYtKfsYHgIWvfaAnEIHDj9Q8k5d2dJAa5bLyvkr5uwaW7yo9VgEnnIYezD0/ksuwTJ/+My2gj7qf7BFrjBZXfDhPVrdc0dWi1aeaX2km1hs0GqtRkTMDg6nw3+oMJogLCN/ZX0JGijPwX2VGJKKgxHxkdQn+ynTg=

@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
+
 AUTHOR = 'makefu'
-SITENAME = 'Adventures in NixOS Unstable'
-SITEURL = 'http://nixos.unstable.krebsco.de/'
+SITENAME = 'Adventures in NixOS nstable'
+SITEURL = 'http://nixos.unstable.krebsco.de'
 #SITESUBTITLE = 'A collection of pseudocode snippets'
 
 TIMEZONE = 'Europe/Berlin'
@@ -20,8 +21,8 @@ EXTRA_PATH_METADATA = { 'extra/robots.txt': {'path': 'robots.txt'}, }
 
 # Blogroll
 LINKS =  (
-        ('my tech blog', 'http://euer.krebsco.de'),
         ('exco\'s blog', 'http://excogitation.de'),
+        ('makefu\'s blog', 'http://euer.krebsco.de'),
         ('Binaergewitter', 'http://krepel.us'),)
 
 # Social widget
@@ -29,9 +30,7 @@ SOCIAL = (('@makefoo', 'http://twitter.com/makefoo') ,)
 DEFAULT_PAGINATION = 10
 
 DISQUS_SITENAME = 'nixos-unstable'
-#GOOGLE_ANALYTICS = ""
-PIWIK_URL='mediengewitter.krebsco.de:10000'
-PIWIK_SITE_ID=2
+GOOGLE_ANALYTICS = "UA-81296513-1"
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
