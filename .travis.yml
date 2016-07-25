@@ -4,7 +4,7 @@ install:
 - pip install pelican ghp-import markdown
 
 # this would build the blog:
-- script:
+script:
  - pelican content/
 
 deploy:
