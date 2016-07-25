@@ -21,9 +21,11 @@ EXTRA_PATH_METADATA = { 'extra/robots.txt': {'path': 'robots.txt'}, }
 
 # Blogroll
 LINKS =  (
-        ('exco\'s blog', 'http://excogitation.de'),
+        ('eloop congress', 'http://eloop.org'),
+        ('Binaergewitter', 'http://krepel.us'),
         ('makefu\'s blog', 'http://euer.krebsco.de'),
-        ('Binaergewitter', 'http://krepel.us'),)
+        ('exco\'s blog', 'http://excogitation.de'),
+        )
 
 # Social widget
 SOCIAL = (('@makefoo', 'http://twitter.com/makefoo') ,)
