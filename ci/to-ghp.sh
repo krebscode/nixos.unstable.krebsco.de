@@ -9,7 +9,7 @@ CNAME=${CNAME:-$GH_REPO}
 
 echo "rebuilding pelican with correct siteurl"
 sed -i "s;^\(SITEURL\).*;\1 = 'http://${CNAME}';" ./pelicanconf.py
-pelican
+pelican content/
 
 echo "adding CNAME file"
 echo "${CNAME}" > output/CNAME

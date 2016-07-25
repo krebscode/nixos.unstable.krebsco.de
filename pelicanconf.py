@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 
 AUTHOR = 'makefu'
-SITENAME = 'Adventures in NixOS nstable'
+SITENAME = 'Adventures in NixOS unstable'
 SITEURL = 'http://nixos.unstable.krebsco.de'
 #SITESUBTITLE = 'A collection of pseudocode snippets'
 
