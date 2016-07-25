@@ -31,7 +31,7 @@ LINKS =  (
 SOCIAL = (('@makefoo', 'http://twitter.com/makefoo') ,)
 DEFAULT_PAGINATION = 10
 
-DISQUS_SITENAME = 'nixos-unstable'
+DISQUS_SITENAME = 'unstable'
 GOOGLE_ANALYTICS = "UA-81296513-1"
 
 # Uncomment following line if you want document-relative URLs when developing
