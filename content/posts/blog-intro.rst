@@ -1,6 +1,7 @@
-Adventures with NixOS
-##################################
+Blog Introduction
+#################
 :date: 2016-07-21 11:02
+:modified: 2016-07-25 14:06
 :author: makefu
 :tags: nixos, unstable, stable, intro
 
