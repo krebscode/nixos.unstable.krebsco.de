@@ -1,15 +1,31 @@
 ``stable@2016-06-11`` to ``unstable@2016-07-20``
 ####################################################
 :date: 2016-07-25 14:06
-:modified: 2016-07-25 14:06
+:modified: 2016-07-27 09:06
 :author: makefu
 :tags: stable-to-unstable
 
 Accidentally updated from stable channel to unstable:
-:code:`0546a4a -> 125ffff``
+:code:`0546a4a -> 125ffff`
 
 Problems
 --------
+msmtp stopped working
+~~~~~~~~~~~~~~~~~~~~~
+trying to start up msmtp results in:
+
+.. code-block:: bash
+
+  Jul 27 09:07:35 omo audit[5803]: ANOM_ABEND auid=9001 uid=9001 gid=100 ses=4 pid=5803 comm="msmtp" exe="/nix/store/ic79467gar4ard15z3xwknxwa772gy9q-msmtp-1.6.4/bin/msmtp" sig=4
+  Jul 27 09:07:35 omo kernel: traps: msmtp[5803] trap invalid opcode ip:7fc95490e18e sp:7ffcf59b2448 error:0 in libgmp.so.10.3.0[7fc9548d5000+8f000]
+  Jul 27 09:07:35 omo kernel: audit: type=1701 audit(1469603255.865:151): auid=9001 uid=9001 gid=100 ses=4 pid=5803 comm="msmtp" exe="/nix/store/ic79467gar4ard15z3xwknxwa772gy9q-msmtp-1.6.4/bin/msmtp" sig=4
+
+Just to finish sending my mail I installed old msmtp into user env:
+
+.. code-block:: bash
+
+  find /nix/store -name msmtpd -type f
+  nix-env -i /nix/store/pzfam2i2kpfdncz8yzyn5bkxq7fmin8z-msmtp-1.6.4/bin/msmtp
 
 GPG agent stopped working
 ~~~~~~~~~~~~~~~~~~~~~~~~~
