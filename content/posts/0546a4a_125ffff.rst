@@ -10,6 +10,16 @@ Accidentally updated from stable channel to unstable:
 
 Problems
 --------
+Xorg does not accept connections from system users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+not sure how long it didn't work but :code:`xhost` fixes it.
+
+.. code-block:: bash
+
+  services.xserver.displayManager.sessionCommands = ''
+    ${pkgs.xorg.xhost}/bin/xhost +local:
+  '';
+
 msmtp stopped working
 ~~~~~~~~~~~~~~~~~~~~~
 trying to start up msmtp results in:
