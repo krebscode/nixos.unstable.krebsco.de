@@ -1,15 +1,15 @@
 ``stable@2016-06-11`` to ``unstable@2016-07-20``
 ####################################################
 :date: 2016-07-25 14:06
-:modified: 2016-07-27 09:06
+:modified: 2016-08-03 09:06
 :author: makefu
-:tags: stable-to-unstable
+:tags: stable-to-unstable, 125ffff, 0546a4a
 
 Accidentally updated from stable channel to unstable:
 :code:`0546a4a -> 125ffff`
 
-Problems
---------
+new problems i managed to solve
+-------------------------------
 Xorg does not accept connections from system users
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 not sure how long it didn't work but :code:`xhost` fixes it.
@@ -130,11 +130,19 @@ Deprecated nixpkgs options
     -    vaapiDrivers = [ pkgs.vaapiIntel pkgs.vaapiVdpau ];
 
 
-Xorg takes 10 seconds to boot
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-I do not boot too often, will have this solved via enterprise-waiting.
+broken stuff i will fix by waiting for a new release
+----------------------------------------------------
 
-Solved with update
+* **Xorg takes 10 seconds to boot** -
+  I do not boot too often, will have this solved via enterprise-waiting.
+* **Screen flickers when root user logs in** -
+  Redshift is now a systemd user service which results in redshift starting up
+  at connect. Will not do anything.
+* **systemd --user fails** -
+  see https://github.com/NixOS/nixpkgs/issues/15653
+
+
+solved with update
 ------------------
 Some things actually get solved with the new rev:
 
