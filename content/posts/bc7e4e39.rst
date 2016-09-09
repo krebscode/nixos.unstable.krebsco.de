@@ -1,0 +1,16 @@
+`unstable@2016-09-09``
+####################################################
+:date: 2016-09-09 09:55
+:modified: 2016-09-09 09:55
+:author: mic92
+:tags:  bc7e4e39
+
+Keyboard stopped working
+~~~~~~~~~~~~~~~~~~~~~~~~
+Because of linux kernel 4.4.20 the kernel module: i8042 is no longer loaded.
+I added the following to `boot.initrd.availableKernelModules`
+
+.. code-block:: diff
+
+  - boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  + boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" "i8042" ];
