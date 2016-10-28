@@ -150,11 +150,14 @@ broken stuff i will fix by waiting for a new release
 
 * **Xorg takes 10 seconds to boot** -
   I do not boot too often, will have this solved via enterprise-waiting.
+  UPDATE: i think this is related to vboxnet0 to time out after 1min 30sec
 * **Screen flickers when root user logs in** -
   Redshift is now a systemd user service which results in redshift starting up
   at connect. Will not do anything.
 * **systemd --user fails** -
   see https://github.com/NixOS/nixpkgs/issues/15653
+* **cannot print anymore on Samsung SCX-3200 Printer** - overwriting cups and
+  cups_filters results in mass rebuild for my unstable revision
 
 
 solved with update
