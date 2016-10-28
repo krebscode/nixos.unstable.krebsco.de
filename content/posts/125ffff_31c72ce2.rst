@@ -1,4 +1,4 @@
-``unstable@2016-07-20`` to  ``stable@2016-10-19``
+``unstable@2016-07-20`` to  ``stable@2016-10-20``
 ####################################################
 :date: 2016-10-25 18:10
 :modified: 2016-10-28 18:10
@@ -12,76 +12,91 @@ new problems i managed to solve
 -------------------------------
 
 **Dockers containerd does not build anymore:**
+
 .. code-block:: bash
-  building path(s) ‘/nix/store/kgx6hrczlxcddjlc6y05qzsvyy9dh495-containerd-0.2.3’
-  unpacking sources
-  unpacking source archive
-  /nix/store/nqdnji05133asqnqabljw9bmqyc900ig-containerd-v0.2.3-src
-  source root is containerd-v0.2.3-src
-  patching sources
-  configuring
-  no configure script, doing nothing
-  building
-  make flags:
-  SHELL=/nix/store/28wl3f34vfjpw0y5809bgr6382wqdscf-bash-4.3-p48/bin/bash
-  mkdir -p bin/
-  cd ctr && go build -ldflags "-X github.com/docker/containerd.GitCommit= " -o
-  ../bin/ctr
-  http server listening on port 1337
-  redis made a bubu: Redis connection to 127.0.0.1:6379 failed - connect
-  ECONNREFUSED 127.0.0.1:6379
+
+    building path(s) ‘/nix/store/kgx6hrczlxcddjlc6y05qzsvyy9dh495-containerd-0.2.3’
+    unpacking sources
+    unpacking source archive
+    /nix/store/nqdnji05133asqnqabljw9bmqyc900ig-containerd-v0.2.3-src
+    source root is containerd-v0.2.3-src
+    patching sources
+    configuring
+    no configure script, doing nothing
+    building
+    make flags:
+    SHELL=/nix/store/28wl3f34vfjpw0y5809bgr6382wqdscf-bash-4.3-p48/bin/bash
+    mkdir -p bin/
+    cd ctr && go build -ldflags "-X github.com/docker/containerd.GitCommit= " -o
+    ../bin/ctr
+    http server listening on port 1337
+    redis made a bubu: Redis connection to 127.0.0.1:6379 failed - connect
+    ECONNREFUSED 127.0.0.1:6379
 
 **Redis does not start up**
+
 .. code-block:: systemd
-  Oct 22 15:09:30 gum systemd[1]: Started Redis Server.
-  Oct 22 15:09:30 gum redis[28655]: You requested maxclients of 10000 requiring
-  at least 10032 max file descriptors.
+
+    Oct 22 15:09:30 gum systemd[1]: Started Redis Server.
+    Oct 22 15:09:30 gum redis[28655]: You requested maxclients of 10000 requiring
+    at least 10032 max file descriptors.
 
 Fixed with:
+
 .. code-block:: nix
-  systemd.services.redis.serviceConfig.LimitNOFILE=10032;
+
+    systemd.services.redis.serviceConfig.LimitNOFILE=10032;
 
 **PHPFPM does not start up**
+
 .. code-block:: systemd
-  Oct 28 14:00:23 wry systemd[1]: Started phpfpm.service.
-  Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: [/nix/store/41h3wh6rmsanmcs880xdw0j17dvwy8s4-phpfpm.conf:22] value is NULL for a ZEND_INI_PARSER_ENTRY
-  Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: failed to load configuration file '/nix/store/41h3wh6rmsanmcs880xdw0j17dvwy8s4-phpfpm.conf'
-  Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: FPM initialization failed
+
+    Oct 28 14:00:23 wry systemd[1]: Started phpfpm.service.
+    Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: [/nix/store/41h3wh6rmsanmcs880xdw0j17dvwy8s4-phpfpm.conf:22] value is NULL for a ZEND_INI_PARSER_ENTRY
+    Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: failed to load configuration file '/nix/store/41h3wh6rmsanmcs880xdw0j17dvwy8s4-phpfpm.conf'
+    Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: FPM initialization failed
 
 
 Fixed with removing the comment in `services.phpfpm.poolConfigs.euer-wiki`:
-.. code-block:: patch
-  @@ -44,7 +44,6 @@ in {
-          pm.min_spare_servers = 1
-          pm.max_spare_servers = 3
-          chdir = /
-  -       # errors to journal
-          php_admin_value[error_log] = 'stderr'
-          php_admin_flag[log_errors] = on
-          catch_workers_output = yes
 
+.. code-block:: diff
+
+    @@ -44,7 +44,6 @@ in {
+      pm.min_spare_servers = 1
+      pm.max_spare_servers = 3
+      chdir = /
+    - # errors to journal
+      php_admin_value[error_log] = 'stderr'
+      php_admin_flag[log_errors] = on
+      catch_workers_output = yes
 
 **systemd --user fails**
+
 * see https://github.com/NixOS/nixpkgs/issues/15653
 
 The issue contains a workaround:
+
 .. code-block:: bash
-  XDG_RUNTIME_DIR="/run/user/$UID" systemctl --user status
+
+    XDG_RUNTIME_DIR="/run/user/$UID" systemctl --user status
 
 **Whoosh is duplicated**
 
 .. code-block:: text
-  Found duplicated packages in closure for dependency 'Whoosh': 
-    Whoosh 2.7.4 (/nix/store/g3siqia7gjjjbwgyhnjyyvnab8sqn0ir-python3.5-Whoosh-2.7.4/lib/python3.5/site-packages)
-    Whoosh 2.7.0 (/nix/store/slb71bk73479ml1xgwcxhk7x9ynlh0wh-python3.5-Whoosh-2.7.0/lib/python3.5/site-packages)
 
-  Package duplicates found in closure, see above. Usually this happens if two packages depend on different version of the same dependency.
+    Found duplicated packages in closure for dependency 'Whoosh': 
+      Whoosh 2.7.4 (/nix/store/g3siqia7gjjjbwgyhnjyyvnab8sqn0ir-python3.5-Whoosh-2.7.4/lib/python3.5/site-packages)
+      Whoosh 2.7.0 (/nix/store/slb71bk73479ml1xgwcxhk7x9ynlh0wh-python3.5-Whoosh-2.7.0/lib/python3.5/site-packages)
+
+    Package duplicates found in closure, see above. Usually this happens if two packages depend on different version of the same dependency.
 
 solved by removing explicit Whoosh dependency from package description
 
 **Broadcom BCM43b1 stopped working, fixed with:**
+
 .. code-block:: bash
-  boot.kernelModules = [ "wl" ];
+
+    boot.kernelModules = [ "wl" ];
 
 broken stuff i will fix by waiting for a new release
 ----------------------------------------------------
@@ -90,6 +105,7 @@ None besides the ones from the 125ffff release.
 solved with update
 ------------------
 Some things actually get solved with the new rev:
+
 * **unable to print with SCX-3200** seems to be fixed with newest stable release.
 * **BadCOW**
 * **OpenSSL Bugs***
