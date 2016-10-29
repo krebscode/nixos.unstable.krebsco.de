@@ -11,28 +11,6 @@ Peer pressure resulted from switching back to 16.09 stable branch
 new problems i managed to solve
 -------------------------------
 
-**Dockers containerd does not build anymore:**
-
-.. code-block:: bash
-
-    building path(s) ‘/nix/store/kgx6hrczlxcddjlc6y05qzsvyy9dh495-containerd-0.2.3’
-    unpacking sources
-    unpacking source archive
-    /nix/store/nqdnji05133asqnqabljw9bmqyc900ig-containerd-v0.2.3-src
-    source root is containerd-v0.2.3-src
-    patching sources
-    configuring
-    no configure script, doing nothing
-    building
-    make flags:
-    SHELL=/nix/store/28wl3f34vfjpw0y5809bgr6382wqdscf-bash-4.3-p48/bin/bash
-    mkdir -p bin/
-    cd ctr && go build -ldflags "-X github.com/docker/containerd.GitCommit= " -o
-    ../bin/ctr
-    http server listening on port 1337
-    redis made a bubu: Redis connection to 127.0.0.1:6379 failed - connect
-    ECONNREFUSED 127.0.0.1:6379
-
 **Redis does not start up**
 
 .. code-block:: systemd
