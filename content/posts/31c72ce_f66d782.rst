@@ -1,7 +1,7 @@
 ``stable@2016-10-20`` to ``unstable@2017-02-04``
 ####################################################
 :date: 2017-02-04 15:00
-:modified: 2017-02-04 15:00
+:modified: 2017-02-08 18:00
 :author: makefu
 :tags: unstable-to-stable, 31c72ce2, f66d7823
 
@@ -28,6 +28,29 @@ Testing new awesome config via:
 
   Xephyr :1 -ac -br -noreset -screen 800x600
   DISPLAY=:1.0 awesome -c ~/rc.lua
+
+**proot stopped working**
+
+proot now requires :code:`PROOT_NO_SECCOMP=1` environment variable to be set to not segfault with error 11.
+
+Github Issue: https://github.com/proot-me/PRoot/issues/106
+
+.. code-block:: diff
+
+	diff --git a/lib/populate.jq b/lib/populate.jq
+	index c51e44e..93bb519 100644
+	--- a/lib/populate.jq
+	+++ b/lib/populate.jq
+	@@ -83,7 +83,7 @@ def rsync_script:
+		($symlink_sources[] |
+		@sh "ln -s \(.value.symlink.target) \"$srcdir\"/\(.key)"),
+	
+	-  @sh "proot \\",
+	+  @sh "PROOT_NO_SECCOMP=1 proot \\",
+		($file_sources[] |
+		@sh "    -b \(.value.file.path):\"$srcdir\"/\(.key) \\"),
+		@sh "    rsync \\",
+
 
 
 broken stuff i will fix by waiting for a new release
