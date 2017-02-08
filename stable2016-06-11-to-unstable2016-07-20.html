@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+        <title>stable@2016-06-11 to unstable@2016-07-20</title>
+        <meta charset="utf-8" />
+        <link href="http://nixos.unstable.krebsco.de/atom.xml" type="application/atom+xml" rel="alternate" title="Adventures in NixOS unstable Full Atom Feed" />
+
+
+        <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="./theme/gumby.css" />
+        <link rel="stylesheet" type="text/css" href="./theme/style.css" />
+        <link rel="stylesheet" type="text/css" href="./theme/pygment.css" />
+
+        <script src="./theme/js/libs/modernizr-2.6.2.min.js"></script>
+
+
+
+
+
+
+</head>
+
+<body id="index" class="home">
+
+
+    <div class="container">
+
+        <div class="row">
+
+          <header id="banner" class="body">
+                  <h1><a href="./">Adventures in NixOS unstable <strong></strong></a></h1>
+          </header><!-- /#banner -->
+
+            <div id="navigation" class="navbar row">
+              <a href="#" gumby-trigger="#navigation &gt; ul" class="toggle"><i class="icon-menu"></i></a>
+             
+              <ul class="columns">
+                <li><a href="./">Home</a></li>
+
+                <li><a href="http://wiki.euer.krebsco.de/makefu.html">Wiki</a></li>
+
+              </ul>
+            </div>
+
+<section id="content" class="body">
+
+   <div class="row">
+        <div class="eleven columns">
+
+
+            <header>
+              <h2 class="entry-title">
+                <a href="./stable2016-06-11-to-unstable2016-07-20.html" rel="bookmark"
+                   title="Permalink to stable@2016-06-11 to unstable@2016-07-20"><tt class="docutils literal"><span class="pre">stable&#64;2016-06-11</span></tt> to <tt class="docutils literal"><span class="pre">unstable&#64;2016-07-20</span></tt></a></h2>
+           
+            </header>
+            <footer class="post-info">
+              <abbr class="published" title="2016-07-25T14:06:00+02:00">
+                Mon 25 July 2016
+              </abbr>
+              <address class="vcard author">
+                By <a class="url fn" href="./author/makefu.html">makefu</a>
+              </address>
+            </footer><!-- /.post-info -->
+            <div class="entry-content">
+              <p>Accidentally updated from stable channel to unstable:
+<code>0546a4a -&gt; 125ffff</code></p>
+<div class="section" id="new-problems-i-managed-to-solve">
+<h2>new problems i managed to solve</h2>
+<div class="section" id="xorg-does-not-accept-connections-from-system-users">
+<h3>Xorg does not accept connections from system users</h3>
+<p>not sure how long it didn't work but <code>xhost</code> fixes it.</p>
+<div class="highlight"><pre><span></span>services.xserver.displayManager.sessionCommands <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+  <span class="si">${</span><span class="nv">pkgs</span><span class="p">.xorg.xhost</span><span class="si">}</span>/bin/xhost +local:
+<span class="s1">&#39;&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="section" id="msmtp-stopped-working">
+<h3>msmtp stopped working</h3>
+<p>trying to start up msmtp results in:</p>
+<div class="highlight"><pre><span></span>Jul <span class="m">27</span> <span class="m">09</span>:07:35 omo audit<span class="o">[</span><span class="m">5803</span><span class="o">]</span>: ANOM_ABEND <span class="nv">auid</span><span class="o">=</span><span class="m">9001</span> <span class="nv">uid</span><span class="o">=</span><span class="m">9001</span> <span class="nv">gid</span><span class="o">=</span><span class="m">100</span> <span class="nv">ses</span><span class="o">=</span><span class="m">4</span> <span class="nv">pid</span><span class="o">=</span><span class="m">5803</span> <span class="nv">comm</span><span class="o">=</span><span class="s2">&quot;msmtp&quot;</span> <span class="nv">exe</span><span class="o">=</span><span class="s2">&quot;/nix/store/ic79467gar4ard15z3xwknxwa772gy9q-msmtp-1.6.4/bin/msmtp&quot;</span> <span class="nv">sig</span><span class="o">=</span><span class="m">4</span>
+Jul <span class="m">27</span> <span class="m">09</span>:07:35 omo kernel: traps: msmtp<span class="o">[</span><span class="m">5803</span><span class="o">]</span> <span class="nb">trap</span> invalid opcode ip:7fc95490e18e sp:7ffcf59b2448 error:0 in libgmp.so.10.3.0<span class="o">[</span>7fc9548d5000+8f000<span class="o">]</span>
+Jul <span class="m">27</span> <span class="m">09</span>:07:35 omo kernel: audit: <span class="nv">type</span><span class="o">=</span><span class="m">1701</span> audit<span class="o">(</span><span class="m">1469603255</span>.865:151<span class="o">)</span>: <span class="nv">auid</span><span class="o">=</span><span class="m">9001</span> <span class="nv">uid</span><span class="o">=</span><span class="m">9001</span> <span class="nv">gid</span><span class="o">=</span><span class="m">100</span> <span class="nv">ses</span><span class="o">=</span><span class="m">4</span> <span class="nv">pid</span><span class="o">=</span><span class="m">5803</span> <span class="nv">comm</span><span class="o">=</span><span class="s2">&quot;msmtp&quot;</span> <span class="nv">exe</span><span class="o">=</span><span class="s2">&quot;/nix/store/ic79467gar4ard15z3xwknxwa772gy9q-msmtp-1.6.4/bin/msmtp&quot;</span> <span class="nv">sig</span><span class="o">=</span><span class="m">4</span>
+</pre></div>
+<p>Just to finish sending my mail I installed old msmtp into user env:</p>
+<div class="highlight"><pre><span></span>find /nix/store -name msmtpd -type f
+nix-env -i /nix/store/pzfam2i2kpfdncz8yzyn5bkxq7fmin8z-msmtp-1.6.4/bin/msmtp
+</pre></div>
+</div>
+<div class="section" id="gpg-agent-stopped-working">
+<h3>GPG agent stopped working</h3>
+<p>Seems like in gpg 2.1 write-env-file became obsolete:</p>
+<div class="highlight"><pre><span></span>gpg-agent<span class="o">[</span><span class="m">14303</span><span class="o">]</span>: WARNING: <span class="s2">&quot;--write-env-file&quot;</span> is an obsolete option - it has no effect<span class="sb">`</span>
+</pre></div>
+<div class="section" id="solution">
+<h4>Solution</h4>
+<div class="highlight"><pre><span></span><span class="gd">--- a/makefu/2configs/zsh-user.nix</span>
+<span class="gi">+++ b/makefu/2configs/zsh-user.nix</span>
+<span class="gu">@@ -22,15 +22,11 @@</span>
+<span class="gd">-      # load gpg-agent</span>
+<span class="gd">-      envfile=&quot;$HOME/.gnupg/gpg-agent.env&quot;</span>
+<span class="gd">-      if [ -e &quot;$envfile&quot; ] &amp;&amp; kill -0 $(grep GPG_AGENT_INFO &quot;$envfile&quot; | cut -d: -f 2) 2&gt;/dev/null; then</span>
+<span class="gd">-        eval &quot;$(cat &quot;$envfile&quot;)&quot;</span>
+<span class="gd">-      else</span>
+<span class="gd">-        eval &quot;$(${pkgs.gnupg}/bin/gpg-agent --daemon --enable-ssh-support --write-env-file &quot;$envfile&quot;)&quot;</span>
+<span class="gd">-      fi</span>
+<span class="gd">-      export GPG_AGENT_INFO</span>
+<span class="gd">-      export SSH_AUTH_SOCK</span>
+<span class="gi">+      ${pkgs.gnupg}/bin/gpg-connect-agent updatestartuptty /bye &gt;/dev/null</span>
+<span class="gi">+      GPG_TTY=$(tty)</span>
+<span class="gi">+      export GPG_TTY</span>
+<span class="gi">+      unset SSH_AGENT_PID</span>
+<span class="gi">+      export SSH_AUTH_SOCK=&quot;/run/user/$UID/gnupg/S.gpg-agent.ssh&quot;</span>
+      &#39;&#39;;
+</pre></div>
+</div>
+</div>
+<div class="section" id="touchpad-enabled-on-x220-but-in-retard-mode">
+<h3>Touchpad enabled on X220 but in retard mode</h3>
+<p>I use the trackpoint instead, before it was disabled by default.</p>
+<div class="section" id="id1">
+<h4>Solution</h4>
+<div class="highlight"><pre><span></span><span class="gd">--- a/makefu/2configs/hw/tp-x2x0.nix</span>
+<span class="gi">+++ b/makefu/2configs/hw/tp-x2x0.nix</span>
+<span class="gu">@@ -12,6 +12,12 @@</span>
+<span class="gi">+  # enable synaptics so we can easily disable the touchpad</span>
+<span class="gi">+  #   enable the touchpad with `synclient TouchpadOff=0`</span>
+<span class="gi">+  services.xserver.synaptics = {</span>
+<span class="gi">+    enable = true;</span>
+<span class="gi">+    additionalOptions = &#39;&#39;Option &quot;TouchpadOff&quot; &quot;1&quot;&#39;&#39;;</span>
+<span class="gi">+  };</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="devpi-stopped-building">
+<h3>Devpi stopped building</h3>
+<p>Tests are activated by default for python packages. For some reason my devpi
+package contains failing tests, too lazy to investigate.</p>
+<div class="section" id="workaround">
+<h4>Workaround</h4>
+<div class="highlight"><pre><span></span><span class="gd">--- a/makefu/5pkgs/devpi/default.nix</span>
+<span class="gi">+++ b/makefu/5pkgs/devpi/default.nix</span>
+<span class="gu">@@ -8,7 +8,7 @@ let</span>
+      url = &quot;https://pypi.python.org/packages/source/e/execnet/${name}.tar.gz&quot;;
+      sha256 = &quot;1rpk1vyclhg911p3hql0m0nrpq7q7mysxnaaw6vs29cpa6kx8vgn&quot;;
+    };
+<span class="gd">-</span>
+<span class="gi">+    doCheck = false;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deprecated-nixpkgs-options">
+<h3>Deprecated nixpkgs options</h3>
+<p><tt class="docutils literal">services.xserver.vaapiDrivers</tt> became <tt class="docutils literal">hardware.opengl.extraPackages</tt>,
+<tt class="docutils literal">nix.useChroot</tt> became <tt class="docutils literal">nix.useSandbox</tt>, <tt class="docutils literal">services.iodined.*</tt> became <tt class="docutils literal">services.iodined.server</tt>.</p>
+<div class="highlight"><pre><span></span><span class="gd">--- a/makefu/2configs/default.nix</span>
+<span class="gi">+++ b/makefu/2configs/default.nix</span>
+<span class="gu">@@ -66,7 +66,7 @@</span>
+<span class="gd">-  nix.useChroot = true;</span>
+<span class="gi">+  nix.useSandbox = true;</span>
+<span class="gd">--- a/makefu/2configs/hw/tp-x220.nix</span>
+<span class="gi">+++ b/makefu/2configs/hw/tp-x220.nix</span>
+<span class="gu">@@ -8,10 +8,9 @@</span>
+<span class="gd">-</span>
+<span class="gi">+  hardware.opengl.extraPackages =  [ pkgs.vaapiIntel pkgs.vaapiVdpau ];</span>
+  services.xserver = {
+    videoDriver = &quot;intel&quot;;
+<span class="gd">-    vaapiDrivers = [ pkgs.vaapiIntel pkgs.vaapiVdpau ];</span>
+<span class="gd">--- a/makefu/2configs/iodined.nix</span>
+<span class="gi">+++ b/makefu/2configs/iodined.nix</span>
+<span class="gu">@@ -8,9 +8,11 @@ in {</span>
+
+  services.iodined = {
+    enable = true;
+<span class="gd">-    domain = domain;</span>
+<span class="gd">-    ip = &quot;172.16.10.1/24&quot;;</span>
+<span class="gd">-    extraConfig = &quot;-P ${pw} -l ${config.krebs.build.host.nets.internet.ip4.addr}&quot;;</span>
+<span class="gi">+    server = {</span>
+<span class="gi">+      domain = domain;</span>
+<span class="gi">+      ip = &quot;172.16.10.1/24&quot;;</span>
+<span class="gi">+      extraConfig = &quot;-P ${pw} -l ${config.krebs.build.host.nets.internet.ip4.addr}&quot;;</span>
+<span class="gi">+    };</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="broken-stuff-i-will-fix-by-waiting-for-a-new-release">
+<h2>broken stuff i will fix by waiting for a new release</h2>
+<ul class="simple">
+<li><strong>Xorg takes 10 seconds to boot</strong> -
+I do not boot too often, will have this solved via enterprise-waiting.
+UPDATE: i think this is related to vboxnet0 to time out after 1min 30sec</li>
+<li><strong>Screen flickers when root user logs in</strong> -
+Redshift is now a systemd user service which results in redshift starting up
+at connect. Will not do anything.</li>
+<li><strong>systemd --user fails</strong> -
+see <a class="reference external" href="https://github.com/NixOS/nixpkgs/issues/15653">https://github.com/NixOS/nixpkgs/issues/15653</a></li>
+<li><strong>cannot print anymore on Samsung SCX-3200 Printer</strong> - overwriting cups and
+cups_filters results in mass rebuild for my unstable revision</li>
+</ul>
+</div>
+<div class="section" id="solved-with-update">
+<h2>solved with update</h2>
+<p>Some things actually get solved with the new rev:</p>
+<ul class="simple">
+<li>chromium does not use up all 4 CPUs when showing videos</li>
+<li>nixos module <a class="reference external" href="https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/security/acme.nix#L117">security.acme</a> provides <code>preliminarySelfsigned</code> for automated ssl certificate creation</li>
+</ul>
+</div>
+
+            </div><!-- /.entry-content -->
+            <div class="comments">
+              <h3>Comments</h3>
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                var disqus_identifier = "stable2016-06-11-to-unstable2016-07-20.html";
+                (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://unstable.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+            </div>
+
+
+        </div><!-- /.eleven.columns -->
+        
+<div class="three columns sidebar">
+
+<h4>Pages</h4>
+
+ <ul>
+      <li><a href="http://wiki.euer.krebsco.de/makefu.html">Wiki</a></li>
+  </ul>
+
+<h4>Categories</h4>
+<ul>
+		<li><a href="./category/posts.html">posts</a></li>
+</ul>
+
+
+<h4>Tags</h4>
+	<ul>
+</ul>
+
+
+<nav class="widget">
+  <h4>Social</h4>
+  <ul>
+    <li><a href="http://twitter.com/makefoo">@makefoo</a></li>
+  </ul>
+</nav>
+
+</div> </div><!-- /.row -->
+
+
+</section>
+
+       </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+       <div class="container.nopad bg">
+
+    
+        <footer id="credits" class="row">
+          <div class="seven columns left-center">
+
+                   <address id="about" class="vcard body">
+                    Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+                    which takes great advantage of <a href="http://python.org">Python</a>.
+                    <br />
+                    Based on the <a target="_blank" href="http://gumbyframework.com">Gumby Framework</a>
+                    </address>
+          </div>
+
+
+          <div class="seven columns">
+            <div class="row">
+              <ul class="socbtns">
+
+
+
+
+
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'unstable';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+  <script src="./theme/js/libs/jquery-1.9.1.min.js"></script>
+  <script src="./theme/js/libs/gumby.min.js"></script>
+  <script src="./theme/js/plugins.js"></script>
+</body>
+</html>

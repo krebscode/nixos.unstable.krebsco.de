@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+        <title>unstable@2016-09-09`</title>
+        <meta charset="utf-8" />
+        <link href="http://nixos.unstable.krebsco.de/atom.xml" type="application/atom+xml" rel="alternate" title="Adventures in NixOS unstable Full Atom Feed" />
+
+
+        <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="./theme/gumby.css" />
+        <link rel="stylesheet" type="text/css" href="./theme/style.css" />
+        <link rel="stylesheet" type="text/css" href="./theme/pygment.css" />
+
+        <script src="./theme/js/libs/modernizr-2.6.2.min.js"></script>
+
+
+
+
+
+
+</head>
+
+<body id="index" class="home">
+
+
+    <div class="container">
+
+        <div class="row">
+
+          <header id="banner" class="body">
+                  <h1><a href="./">Adventures in NixOS unstable <strong></strong></a></h1>
+          </header><!-- /#banner -->
+
+            <div id="navigation" class="navbar row">
+              <a href="#" gumby-trigger="#navigation &gt; ul" class="toggle"><i class="icon-menu"></i></a>
+             
+              <ul class="columns">
+                <li><a href="./">Home</a></li>
+
+                <li><a href="http://wiki.euer.krebsco.de/makefu.html">Wiki</a></li>
+
+              </ul>
+            </div>
+
+<section id="content" class="body">
+
+   <div class="row">
+        <div class="eleven columns">
+
+
+            <header>
+              <h2 class="entry-title">
+                <a href="./unstable2016-09-09.html" rel="bookmark"
+                   title="Permalink to unstable@2016-09-09`"><cite>unstable&#64;2016-09-09`</cite></a></h2>
+           
+            </header>
+            <footer class="post-info">
+              <abbr class="published" title="2016-09-09T09:55:00+02:00">
+                Fri 09 September 2016
+              </abbr>
+              <address class="vcard author">
+                By <a class="url fn" href="./author/mic92.html">mic92</a>
+              </address>
+            </footer><!-- /.post-info -->
+            <div class="entry-content">
+              <div class="section" id="keyboard-stopped-working">
+<h2>Keyboard stopped working</h2>
+<p>Because of linux kernel 4.4.20 the kernel module: i8042 is no longer loaded.
+I added the following to <cite>boot.initrd.availableKernelModules</cite></p>
+<div class="highlight"><pre><span></span><span class="gd">- boot.initrd.availableKernelModules = [ &quot;xhci_pci&quot; &quot;ehci_pci&quot; &quot;ahci&quot; &quot;usb_storage&quot; &quot;sd_mod&quot; &quot;rtsx_pci_sdmmc&quot; ];</span>
+<span class="gi">+ boot.initrd.availableKernelModules = [ &quot;xhci_pci&quot; &quot;ehci_pci&quot; &quot;ahci&quot; &quot;usb_storage&quot; &quot;sd_mod&quot; &quot;rtsx_pci_sdmmc&quot; &quot;i8042&quot; ];</span>
+</pre></div>
+</div>
+
+            </div><!-- /.entry-content -->
+            <div class="comments">
+              <h3>Comments</h3>
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                var disqus_identifier = "unstable2016-09-09.html";
+                (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://unstable.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+            </div>
+
+
+        </div><!-- /.eleven.columns -->
+        
+<div class="three columns sidebar">
+
+<h4>Pages</h4>
+
+ <ul>
+      <li><a href="http://wiki.euer.krebsco.de/makefu.html">Wiki</a></li>
+  </ul>
+
+<h4>Categories</h4>
+<ul>
+		<li><a href="./category/posts.html">posts</a></li>
+</ul>
+
+
+<h4>Tags</h4>
+	<ul>
+</ul>
+
+
+<nav class="widget">
+  <h4>Social</h4>
+  <ul>
+    <li><a href="http://twitter.com/makefoo">@makefoo</a></li>
+  </ul>
+</nav>
+
+</div> </div><!-- /.row -->
+
+
+</section>
+
+       </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+       <div class="container.nopad bg">
+
+    
+        <footer id="credits" class="row">
+          <div class="seven columns left-center">
+
+                   <address id="about" class="vcard body">
+                    Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+                    which takes great advantage of <a href="http://python.org">Python</a>.
+                    <br />
+                    Based on the <a target="_blank" href="http://gumbyframework.com">Gumby Framework</a>
+                    </address>
+          </div>
+
+
+          <div class="seven columns">
+            <div class="row">
+              <ul class="socbtns">
+
+
+
+
+
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'unstable';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+  <script src="./theme/js/libs/jquery-1.9.1.min.js"></script>
+  <script src="./theme/js/libs/gumby.min.js"></script>
+  <script src="./theme/js/plugins.js"></script>
+</body>
+</html>

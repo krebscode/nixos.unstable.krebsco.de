@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Adventures in NixOS unstable - mic92</title><link href="http://nixos.unstable.krebsco.de/" rel="alternate"></link><link href="http://nixos.unstable.krebsco.de/feeds/mic92.atom.xml" rel="self"></link><id>http://nixos.unstable.krebsco.de/</id><updated>2016-09-24T09:41:00+02:00</updated><entry><title>unstable@2016-09-24`</title><link href="http://nixos.unstable.krebsco.de/unstable2016-09-24.html" rel="alternate"></link><published>2016-09-24T09:41:00+02:00</published><updated>2016-09-24T09:41:00+02:00</updated><author><name>mic92</name></author><id>tag:nixos.unstable.krebsco.de,2016-09-24:/unstable2016-09-24.html</id><summary type="html">&lt;div class="section" id="nix-container-with-ips-break"&gt;
+&lt;h2&gt;Nix-Container with IPs break&lt;/h2&gt;
+&lt;p&gt;Because &lt;cite&gt;b9df84cd&lt;/cite&gt; refactored the syntax of the nix expression,
+building container with private network broke.&lt;/p&gt;
+&lt;p&gt;This [pull request](&lt;a class="reference external" href="https://github.com/NixOS/nixpkgs/pull/18915"&gt;https://github.com/NixOS/nixpkgs/pull/18915&lt;/a&gt;) fix it.&lt;/p&gt;
+&lt;/div&gt;
+</summary><content type="html">&lt;div class="section" id="nix-container-with-ips-break"&gt;
+&lt;h2&gt;Nix-Container with IPs break&lt;/h2&gt;
+&lt;p&gt;Because &lt;cite&gt;b9df84cd&lt;/cite&gt; refactored the syntax of the nix expression,
+building container with private network broke.&lt;/p&gt;
+&lt;p&gt;This [pull request](&lt;a class="reference external" href="https://github.com/NixOS/nixpkgs/pull/18915"&gt;https://github.com/NixOS/nixpkgs/pull/18915&lt;/a&gt;) fix it.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="b9df84cd"></category></entry><entry><title>unstable@2016-09-09`</title><link href="http://nixos.unstable.krebsco.de/unstable2016-09-09.html" rel="alternate"></link><published>2016-09-09T09:55:00+02:00</published><updated>2016-09-09T09:55:00+02:00</updated><author><name>mic92</name></author><id>tag:nixos.unstable.krebsco.de,2016-09-09:/unstable2016-09-09.html</id><summary type="html">&lt;div class="section" id="keyboard-stopped-working"&gt;
+&lt;h2&gt;Keyboard stopped working&lt;/h2&gt;
+&lt;p&gt;Because of linux kernel 4.4.20 the kernel module: i8042 is no longer loaded.
+I added the following to &lt;cite&gt;boot.initrd.availableKernelModules&lt;/cite&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gd"&gt;- boot.initrd.availableKernelModules = [ &amp;quot;xhci_pci&amp;quot; &amp;quot;ehci_pci&amp;quot; &amp;quot;ahci&amp;quot; &amp;quot;usb_storage&amp;quot; &amp;quot;sd_mod&amp;quot; &amp;quot;rtsx_pci_sdmmc&amp;quot; ];&lt;/span&gt;
+&lt;span class="gi"&gt;+ boot.initrd.availableKernelModules = [ &amp;quot;xhci_pci&amp;quot; &amp;quot;ehci_pci&amp;quot; &amp;quot;ahci&amp;quot; &amp;quot;usb_storage&amp;quot; &amp;quot;sd_mod&amp;quot; &amp;quot;rtsx_pci_sdmmc&amp;quot; &amp;quot;i8042&amp;quot; ];&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+</summary><content type="html">&lt;div class="section" id="keyboard-stopped-working"&gt;
+&lt;h2&gt;Keyboard stopped working&lt;/h2&gt;
+&lt;p&gt;Because of linux kernel 4.4.20 the kernel module: i8042 is no longer loaded.
+I added the following to &lt;cite&gt;boot.initrd.availableKernelModules&lt;/cite&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gd"&gt;- boot.initrd.availableKernelModules = [ &amp;quot;xhci_pci&amp;quot; &amp;quot;ehci_pci&amp;quot; &amp;quot;ahci&amp;quot; &amp;quot;usb_storage&amp;quot; &amp;quot;sd_mod&amp;quot; &amp;quot;rtsx_pci_sdmmc&amp;quot; ];&lt;/span&gt;
+&lt;span class="gi"&gt;+ boot.initrd.availableKernelModules = [ &amp;quot;xhci_pci&amp;quot; &amp;quot;ehci_pci&amp;quot; &amp;quot;ahci&amp;quot; &amp;quot;usb_storage&amp;quot; &amp;quot;sd_mod&amp;quot; &amp;quot;rtsx_pci_sdmmc&amp;quot; &amp;quot;i8042&amp;quot; ];&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="bc7e4e39"></category></entry></feed>

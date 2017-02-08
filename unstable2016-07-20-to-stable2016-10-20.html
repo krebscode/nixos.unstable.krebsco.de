@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+        <title>unstable@2016-07-20 to stable@2016-10-20</title>
+        <meta charset="utf-8" />
+        <link href="http://nixos.unstable.krebsco.de/atom.xml" type="application/atom+xml" rel="alternate" title="Adventures in NixOS unstable Full Atom Feed" />
+
+
+        <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="./theme/gumby.css" />
+        <link rel="stylesheet" type="text/css" href="./theme/style.css" />
+        <link rel="stylesheet" type="text/css" href="./theme/pygment.css" />
+
+        <script src="./theme/js/libs/modernizr-2.6.2.min.js"></script>
+
+
+
+
+
+
+</head>
+
+<body id="index" class="home">
+
+
+    <div class="container">
+
+        <div class="row">
+
+          <header id="banner" class="body">
+                  <h1><a href="./">Adventures in NixOS unstable <strong></strong></a></h1>
+          </header><!-- /#banner -->
+
+            <div id="navigation" class="navbar row">
+              <a href="#" gumby-trigger="#navigation &gt; ul" class="toggle"><i class="icon-menu"></i></a>
+             
+              <ul class="columns">
+                <li><a href="./">Home</a></li>
+
+                <li><a href="http://wiki.euer.krebsco.de/makefu.html">Wiki</a></li>
+
+              </ul>
+            </div>
+
+<section id="content" class="body">
+
+   <div class="row">
+        <div class="eleven columns">
+
+
+            <header>
+              <h2 class="entry-title">
+                <a href="./unstable2016-07-20-to-stable2016-10-20.html" rel="bookmark"
+                   title="Permalink to unstable@2016-07-20 to stable@2016-10-20"><tt class="docutils literal"><span class="pre">unstable&#64;2016-07-20</span></tt> to  <tt class="docutils literal"><span class="pre">stable&#64;2016-10-20</span></tt></a></h2>
+           
+            </header>
+            <footer class="post-info">
+              <abbr class="published" title="2016-10-25T18:10:00+02:00">
+                Tue 25 October 2016
+              </abbr>
+              <address class="vcard author">
+                By <a class="url fn" href="./author/makefu.html">makefu</a>
+              </address>
+            </footer><!-- /.post-info -->
+            <div class="entry-content">
+              <p>Peer pressure resulted from switching back to 16.09 stable branch
+<code>125ffff -&gt; 31c72ce2</code></p>
+<div class="section" id="new-problems-i-managed-to-solve">
+<h2>new problems i managed to solve</h2>
+<p><strong>Redis does not start up</strong></p>
+<div class="highlight"><pre><span></span>Oct 22 15:09:30 gum systemd[1]: Started Redis Server.
+Oct 22 15:09:30 gum redis[28655]: You requested maxclients of 10000 requiring
+at least 10032 max file descriptors.
+</pre></div>
+<p>Fixed with:</p>
+<div class="highlight"><pre><span></span>systemd<span class="o">.</span>services<span class="o">.</span>redis<span class="o">.</span>serviceConfig<span class="o">.</span><span class="ss">LimitNOFILE=</span><span class="mi">10032</span><span class="p">;</span>
+</pre></div>
+<p><strong>PHPFPM does not start up</strong></p>
+<div class="highlight"><pre><span></span>Oct 28 14:00:23 wry systemd[1]: Started phpfpm.service.
+Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: [/nix/store/41h3wh6rmsanmcs880xdw0j17dvwy8s4-phpfpm.conf:22] value is NULL for a ZEND_INI_PARSER_ENTRY
+Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: failed to load configuration file &#39;/nix/store/41h3wh6rmsanmcs880xdw0j17dvwy8s4-phpfpm.conf&#39;
+Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: FPM initialization failed
+</pre></div>
+<p>Fixed with removing the comment in <cite>services.phpfpm.poolConfigs.euer-wiki</cite>:</p>
+<div class="highlight"><pre><span></span><span class="gu">@@ -44,7 +44,6 @@ in {</span>
+  pm.min_spare_servers = 1
+  pm.max_spare_servers = 3
+  chdir = /
+<span class="gd">- # errors to journal</span>
+  php_admin_value[error_log] = &#39;stderr&#39;
+  php_admin_flag[log_errors] = on
+  catch_workers_output = yes
+</pre></div>
+<p><strong>systemd --user fails</strong></p>
+<ul class="simple">
+<li>see <a class="reference external" href="https://github.com/NixOS/nixpkgs/issues/15653">https://github.com/NixOS/nixpkgs/issues/15653</a></li>
+</ul>
+<p>The issue contains a workaround:</p>
+<div class="highlight"><pre><span></span><span class="nv">XDG_RUNTIME_DIR</span><span class="o">=</span><span class="s2">&quot;/run/user/</span><span class="nv">$UID</span><span class="s2">&quot;</span> systemctl --user status
+</pre></div>
+<p><strong>Whoosh is duplicated</strong></p>
+<div class="highlight"><pre><span></span>Found duplicated packages in closure for dependency &#39;Whoosh&#39;:
+  Whoosh 2.7.4 (/nix/store/g3siqia7gjjjbwgyhnjyyvnab8sqn0ir-python3.5-Whoosh-2.7.4/lib/python3.5/site-packages)
+  Whoosh 2.7.0 (/nix/store/slb71bk73479ml1xgwcxhk7x9ynlh0wh-python3.5-Whoosh-2.7.0/lib/python3.5/site-packages)
+
+Package duplicates found in closure, see above. Usually this happens if two packages depend on different version of the same dependency.
+</pre></div>
+<p>solved by removing explicit Whoosh dependency from package description</p>
+<p><strong>Broadcom BCM43b1 stopped working, fixed with:</strong></p>
+<div class="highlight"><pre><span></span>boot.kernelModules <span class="o">=</span> <span class="o">[</span> <span class="s2">&quot;wl&quot;</span> <span class="o">]</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="section" id="broken-stuff-i-will-fix-by-waiting-for-a-new-release">
+<h2>broken stuff i will fix by waiting for a new release</h2>
+<p>None besides the ones from the 125ffff release.</p>
+</div>
+<div class="section" id="solved-with-update">
+<h2>solved with update</h2>
+<p>Some things actually get solved with the new rev:</p>
+<ul class="simple">
+<li><strong>unable to print with SCX-3200</strong> seems to be fixed with newest stable release.</li>
+<li><strong>BadCOW</strong></li>
+<li><strong>OpenSSL Bugs*</strong></li>
+</ul>
+</div>
+
+            </div><!-- /.entry-content -->
+            <div class="comments">
+              <h3>Comments</h3>
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                var disqus_identifier = "unstable2016-07-20-to-stable2016-10-20.html";
+                (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://unstable.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+            </div>
+
+
+        </div><!-- /.eleven.columns -->
+        
+<div class="three columns sidebar">
+
+<h4>Pages</h4>
+
+ <ul>
+      <li><a href="http://wiki.euer.krebsco.de/makefu.html">Wiki</a></li>
+  </ul>
+
+<h4>Categories</h4>
+<ul>
+		<li><a href="./category/posts.html">posts</a></li>
+</ul>
+
+
+<h4>Tags</h4>
+	<ul>
+</ul>
+
+
+<nav class="widget">
+  <h4>Social</h4>
+  <ul>
+    <li><a href="http://twitter.com/makefoo">@makefoo</a></li>
+  </ul>
+</nav>
+
+</div> </div><!-- /.row -->
+
+
+</section>
+
+       </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+       <div class="container.nopad bg">
+
+    
+        <footer id="credits" class="row">
+          <div class="seven columns left-center">
+
+                   <address id="about" class="vcard body">
+                    Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+                    which takes great advantage of <a href="http://python.org">Python</a>.
+                    <br />
+                    Based on the <a target="_blank" href="http://gumbyframework.com">Gumby Framework</a>
+                    </address>
+          </div>
+
+
+          <div class="seven columns">
+            <div class="row">
+              <ul class="socbtns">
+
+
+
+
+
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'unstable';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+  <script src="./theme/js/libs/jquery-1.9.1.min.js"></script>
+  <script src="./theme/js/libs/gumby.min.js"></script>
+  <script src="./theme/js/plugins.js"></script>
+</body>
+</html>

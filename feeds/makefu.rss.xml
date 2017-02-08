@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Adventures in NixOS unstable - makefu</title><link>http://nixos.unstable.krebsco.de/</link><description></description><lastBuildDate>Wed, 08 Feb 2017 18:00:00 +0100</lastBuildDate><item><title>stable@2016-10-20 to unstable@2017-02-04</title><link>http://nixos.unstable.krebsco.de/stable2016-10-20-to-unstable2017-02-04.html</link><description>&lt;p&gt;Mic92 convinced me to try out unstable again.
+&lt;code&gt;31c72ce2 -&amp;gt; f66d7823&lt;/code&gt;&lt;/p&gt;
+&lt;div class="section" id="new-problems-i-managed-to-solve"&gt;
+&lt;h2&gt;new problems i managed to solve&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;awesome4.0 introduced breaking api changes&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Due to the fact that the whole awesomecfg is code, everything exploded. My
+temporary solution was to replace some of the old config default parts with the
+new …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makefu</dc:creator><pubDate>Sat, 04 Feb 2017 15:00:00 +0100</pubDate><guid isPermaLink="false">tag:nixos.unstable.krebsco.de,2017-02-04:/stable2016-10-20-to-unstable2017-02-04.html</guid><category>unstable-to-stable</category><category>31c72ce2</category><category>f66d7823</category></item><item><title>unstable@2016-07-20 to stable@2016-10-20</title><link>http://nixos.unstable.krebsco.de/unstable2016-07-20-to-stable2016-10-20.html</link><description>&lt;p&gt;Peer pressure resulted from switching back to 16.09 stable branch
+&lt;code&gt;125ffff -&amp;gt; 31c72ce2&lt;/code&gt;&lt;/p&gt;
+&lt;div class="section" id="new-problems-i-managed-to-solve"&gt;
+&lt;h2&gt;new problems i managed to solve&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Redis does not start up&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Oct 22 15:09:30 gum systemd[1]: Started Redis Server.
+Oct 22 15:09:30 gum redis[28655]: You requested maxclients of 10000 requiring
+at …&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makefu</dc:creator><pubDate>Tue, 25 Oct 2016 18:10:00 +0200</pubDate><guid isPermaLink="false">tag:nixos.unstable.krebsco.de,2016-10-25:/unstable2016-07-20-to-stable2016-10-20.html</guid><category>unstab-to-stable</category><category>125ffff</category><category>31c72ce2</category></item><item><title>stable@2016-06-11 to unstable@2016-07-20</title><link>http://nixos.unstable.krebsco.de/stable2016-06-11-to-unstable2016-07-20.html</link><description>&lt;p&gt;Accidentally updated from stable channel to unstable:
+&lt;code&gt;0546a4a -&amp;gt; 125ffff&lt;/code&gt;&lt;/p&gt;
+&lt;div class="section" id="new-problems-i-managed-to-solve"&gt;
+&lt;h2&gt;new problems i managed to solve&lt;/h2&gt;
+&lt;div class="section" id="xorg-does-not-accept-connections-from-system-users"&gt;
+&lt;h3&gt;Xorg does not accept connections from system users&lt;/h3&gt;
+&lt;p&gt;not sure how long it didn't work but &lt;code&gt;xhost&lt;/code&gt; fixes it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;services.xserver.displayManager.sessionCommands &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+  &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;pkgs&lt;/span&gt;&lt;span class="p"&gt;.xorg.xhost&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/bin/xhost +local:
+&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="msmtp-stopped-working"&gt;
+&lt;h3&gt;msmtp stopped working&lt;/h3&gt;
+&lt;p&gt;trying to start …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makefu</dc:creator><pubDate>Mon, 25 Jul 2016 14:06:00 +0200</pubDate><guid isPermaLink="false">tag:nixos.unstable.krebsco.de,2016-07-25:/stable2016-06-11-to-unstable2016-07-20.html</guid><category>stable-to-unstable</category><category>125ffff</category><category>0546a4a</category></item><item><title>Blog Introduction</title><link>http://nixos.unstable.krebsco.de/blog-introduction.html</link><description>&lt;p&gt;I decided i will share my adventures through &lt;a class="reference external" href="https://nixos.org/"&gt;NixOS&lt;/a&gt; and
+more specifically following either the &lt;a class="reference external" href="https://nixos.org/nixos/manual/index.html#sec-upgrading"&gt;NixOS Unstable Channel&lt;/a&gt; or the Latest NixOS Stable Channel.&lt;/p&gt;
+&lt;p&gt;The Blog posts will contain the Git Hash and the time i updated. It will be mostly a short problem description and how (or how not …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makefu</dc:creator><pubDate>Thu, 21 Jul 2016 11:02:00 +0200</pubDate><guid isPermaLink="false">tag:nixos.unstable.krebsco.de,2016-07-21:/blog-introduction.html</guid><category>nixos</category><category>unstable</category><category>stable</category><category>intro</category></item></channel></rss>

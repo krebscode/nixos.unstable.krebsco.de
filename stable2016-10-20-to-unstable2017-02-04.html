@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+        <title>stable@2016-10-20 to unstable@2017-02-04</title>
+        <meta charset="utf-8" />
+        <link href="http://nixos.unstable.krebsco.de/atom.xml" type="application/atom+xml" rel="alternate" title="Adventures in NixOS unstable Full Atom Feed" />
+
+
+        <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="./theme/gumby.css" />
+        <link rel="stylesheet" type="text/css" href="./theme/style.css" />
+        <link rel="stylesheet" type="text/css" href="./theme/pygment.css" />
+
+        <script src="./theme/js/libs/modernizr-2.6.2.min.js"></script>
+
+
+
+
+
+
+</head>
+
+<body id="index" class="home">
+
+
+    <div class="container">
+
+        <div class="row">
+
+          <header id="banner" class="body">
+                  <h1><a href="./">Adventures in NixOS unstable <strong></strong></a></h1>
+          </header><!-- /#banner -->
+
+            <div id="navigation" class="navbar row">
+              <a href="#" gumby-trigger="#navigation &gt; ul" class="toggle"><i class="icon-menu"></i></a>
+             
+              <ul class="columns">
+                <li><a href="./">Home</a></li>
+
+                <li><a href="http://wiki.euer.krebsco.de/makefu.html">Wiki</a></li>
+
+              </ul>
+            </div>
+
+<section id="content" class="body">
+
+   <div class="row">
+        <div class="eleven columns">
+
+
+            <header>
+              <h2 class="entry-title">
+                <a href="./stable2016-10-20-to-unstable2017-02-04.html" rel="bookmark"
+                   title="Permalink to stable@2016-10-20 to unstable@2017-02-04"><tt class="docutils literal"><span class="pre">stable&#64;2016-10-20</span></tt> to <tt class="docutils literal"><span class="pre">unstable&#64;2017-02-04</span></tt></a></h2>
+           
+            </header>
+            <footer class="post-info">
+              <abbr class="published" title="2017-02-04T15:00:00+01:00">
+                Sat 04 February 2017
+              </abbr>
+              <address class="vcard author">
+                By <a class="url fn" href="./author/makefu.html">makefu</a>
+              </address>
+            </footer><!-- /.post-info -->
+            <div class="entry-content">
+              <p>Mic92 convinced me to try out unstable again.
+<code>31c72ce2 -&gt; f66d7823</code></p>
+<div class="section" id="new-problems-i-managed-to-solve">
+<h2>new problems i managed to solve</h2>
+<p><strong>awesome4.0 introduced breaking api changes</strong></p>
+<p>Due to the fact that the whole awesomecfg is code, everything exploded. My
+temporary solution was to replace some of the old config default parts with the
+new ones from the default config but it was no fun.
+Some stuff is marked as deprecated (<code>use gears instead</code>) but i have no idea
+how.</p>
+<blockquote>
+<ul class="simple">
+<li>Full diff: <a class="reference external" href="http://cgit.euer.krebsco.de/stockholm/commit/?id=0ef6adccc7a9bcbff99fbe093593aa95a8eae7fa">http://cgit.euer.krebsco.de/stockholm/commit/?id=0ef6adccc7a9bcbff99fbe093593aa95a8eae7fa</a></li>
+<li>Documentation on github for the awesomewm change: <a class="reference external" href="https://github.com/awesomeWM/awesome/issues/967">https://github.com/awesomeWM/awesome/issues/967</a></li>
+<li>New Guides for default config: <a class="reference external" href="https://awesomewm.org/apidoc/documentation/05-awesomerc.md.html">https://awesomewm.org/apidoc/documentation/05-awesomerc.md.html</a></li>
+</ul>
+</blockquote>
+<p>Testing new awesome config via:</p>
+<div class="highlight"><pre><span></span>Xephyr :1 -ac -br -noreset -screen 800x600
+<span class="nv">DISPLAY</span><span class="o">=</span>:1.0 awesome -c ~/rc.lua
+</pre></div>
+<p><strong>proot stopped working</strong></p>
+<p>proot now requires <code>PROOT_NO_SECCOMP=1</code> environment variable to be set to not segfault with error 11.</p>
+<p>Github Issue: <a class="reference external" href="https://github.com/proot-me/PRoot/issues/106">https://github.com/proot-me/PRoot/issues/106</a></p>
+<div class="highlight"><pre><span></span><span class="gh">diff --git a/lib/populate.jq b/lib/populate.jq</span>
+<span class="gh">index c51e44e..93bb519 100644</span>
+<span class="gd">--- a/lib/populate.jq</span>
+<span class="gi">+++ b/lib/populate.jq</span>
+<span class="gu">@@ -83,7 +83,7 @@ def rsync_script:</span>
+        ($symlink_sources[] |
+        @sh &quot;ln -s \(.value.symlink.target) \&quot;$srcdir\&quot;/\(.key)&quot;),
+
+<span class="gd">-  @sh &quot;proot \\&quot;,</span>
+<span class="gi">+  @sh &quot;PROOT_NO_SECCOMP=1 proot \\&quot;,</span>
+        ($file_sources[] |
+        @sh &quot;    -b \(.value.file.path):\&quot;$srcdir\&quot;/\(.key) \\&quot;),
+        @sh &quot;    rsync \\&quot;,
+</pre></div>
+</div>
+<div class="section" id="broken-stuff-i-will-fix-by-waiting-for-a-new-release">
+<h2>broken stuff i will fix by waiting for a new release</h2>
+</div>
+<div class="section" id="new-and-solved-with-update">
+<h2>new and solved with update</h2>
+<ul class="simple">
+<li><strong>services.journalbeat</strong></li>
+<li><strong>Grafana 4.1</strong> - JUST WORKED!</li>
+</ul>
+</div>
+
+            </div><!-- /.entry-content -->
+            <div class="comments">
+              <h3>Comments</h3>
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                var disqus_identifier = "stable2016-10-20-to-unstable2017-02-04.html";
+                (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://unstable.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+            </div>
+
+
+        </div><!-- /.eleven.columns -->
+        
+<div class="three columns sidebar">
+
+<h4>Pages</h4>
+
+ <ul>
+      <li><a href="http://wiki.euer.krebsco.de/makefu.html">Wiki</a></li>
+  </ul>
+
+<h4>Categories</h4>
+<ul>
+		<li><a href="./category/posts.html">posts</a></li>
+</ul>
+
+
+<h4>Tags</h4>
+	<ul>
+</ul>
+
+
+<nav class="widget">
+  <h4>Social</h4>
+  <ul>
+    <li><a href="http://twitter.com/makefoo">@makefoo</a></li>
+  </ul>
+</nav>
+
+</div> </div><!-- /.row -->
+
+
+</section>
+
+       </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+       <div class="container.nopad bg">
+
+    
+        <footer id="credits" class="row">
+          <div class="seven columns left-center">
+
+                   <address id="about" class="vcard body">
+                    Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+                    which takes great advantage of <a href="http://python.org">Python</a>.
+                    <br />
+                    Based on the <a target="_blank" href="http://gumbyframework.com">Gumby Framework</a>
+                    </address>
+          </div>
+
+
+          <div class="seven columns">
+            <div class="row">
+              <ul class="socbtns">
+
+
+
+
+
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'unstable';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+  <script src="./theme/js/libs/jquery-1.9.1.min.js"></script>
+  <script src="./theme/js/libs/gumby.min.js"></script>
+  <script src="./theme/js/plugins.js"></script>
+</body>
+</html>

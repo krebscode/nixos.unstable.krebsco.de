@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Adventures in NixOS unstable</title><link href="http://nixos.unstable.krebsco.de/" rel="alternate"></link><link href="http://nixos.unstable.krebsco.de/atom.xml" rel="self"></link><id>http://nixos.unstable.krebsco.de/</id><updated>2017-02-08T18:00:00+01:00</updated><entry><title>stable@2016-10-20 to unstable@2017-02-04</title><link href="http://nixos.unstable.krebsco.de/stable2016-10-20-to-unstable2017-02-04.html" rel="alternate"></link><published>2017-02-04T15:00:00+01:00</published><updated>2017-02-08T18:00:00+01:00</updated><author><name>makefu</name></author><id>tag:nixos.unstable.krebsco.de,2017-02-04:/stable2016-10-20-to-unstable2017-02-04.html</id><summary type="html">&lt;p&gt;Mic92 convinced me to try out unstable again.
+&lt;code&gt;31c72ce2 -&amp;gt; f66d7823&lt;/code&gt;&lt;/p&gt;
+&lt;div class="section" id="new-problems-i-managed-to-solve"&gt;
+&lt;h2&gt;new problems i managed to solve&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;awesome4.0 introduced breaking api changes&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Due to the fact that the whole awesomecfg is code, everything exploded. My
+temporary solution was to replace some of the old config default parts with the
+new …&lt;/p&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Mic92 convinced me to try out unstable again.
+&lt;code&gt;31c72ce2 -&amp;gt; f66d7823&lt;/code&gt;&lt;/p&gt;
+&lt;div class="section" id="new-problems-i-managed-to-solve"&gt;
+&lt;h2&gt;new problems i managed to solve&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;awesome4.0 introduced breaking api changes&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Due to the fact that the whole awesomecfg is code, everything exploded. My
+temporary solution was to replace some of the old config default parts with the
+new ones from the default config but it was no fun.
+Some stuff is marked as deprecated (&lt;code&gt;use gears instead&lt;/code&gt;) but i have no idea
+how.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Full diff: &lt;a class="reference external" href="http://cgit.euer.krebsco.de/stockholm/commit/?id=0ef6adccc7a9bcbff99fbe093593aa95a8eae7fa"&gt;http://cgit.euer.krebsco.de/stockholm/commit/?id=0ef6adccc7a9bcbff99fbe093593aa95a8eae7fa&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Documentation on github for the awesomewm change: &lt;a class="reference external" href="https://github.com/awesomeWM/awesome/issues/967"&gt;https://github.com/awesomeWM/awesome/issues/967&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;New Guides for default config: &lt;a class="reference external" href="https://awesomewm.org/apidoc/documentation/05-awesomerc.md.html"&gt;https://awesomewm.org/apidoc/documentation/05-awesomerc.md.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Testing new awesome config via:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Xephyr :1 -ac -br -noreset -screen 800x600
+&lt;span class="nv"&gt;DISPLAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;:1.0 awesome -c ~/rc.lua
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;proot stopped working&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;proot now requires &lt;code&gt;PROOT_NO_SECCOMP=1&lt;/code&gt; environment variable to be set to not segfault with error 11.&lt;/p&gt;
+&lt;p&gt;Github Issue: &lt;a class="reference external" href="https://github.com/proot-me/PRoot/issues/106"&gt;https://github.com/proot-me/PRoot/issues/106&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gh"&gt;diff --git a/lib/populate.jq b/lib/populate.jq&lt;/span&gt;
+&lt;span class="gh"&gt;index c51e44e..93bb519 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/lib/populate.jq&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/lib/populate.jq&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -83,7 +83,7 @@ def rsync_script:&lt;/span&gt;
+        ($symlink_sources[] |
+        @sh &amp;quot;ln -s \(.value.symlink.target) \&amp;quot;$srcdir\&amp;quot;/\(.key)&amp;quot;),
+
+&lt;span class="gd"&gt;-  @sh &amp;quot;proot \\&amp;quot;,&lt;/span&gt;
+&lt;span class="gi"&gt;+  @sh &amp;quot;PROOT_NO_SECCOMP=1 proot \\&amp;quot;,&lt;/span&gt;
+        ($file_sources[] |
+        @sh &amp;quot;    -b \(.value.file.path):\&amp;quot;$srcdir\&amp;quot;/\(.key) \\&amp;quot;),
+        @sh &amp;quot;    rsync \\&amp;quot;,
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="broken-stuff-i-will-fix-by-waiting-for-a-new-release"&gt;
+&lt;h2&gt;broken stuff i will fix by waiting for a new release&lt;/h2&gt;
+&lt;/div&gt;
+&lt;div class="section" id="new-and-solved-with-update"&gt;
+&lt;h2&gt;new and solved with update&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;services.journalbeat&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grafana 4.1&lt;/strong&gt; - JUST WORKED!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</content><category term="unstable-to-stable"></category><category term="31c72ce2"></category><category term="f66d7823"></category></entry><entry><title>unstable@2016-07-20 to stable@2016-10-20</title><link href="http://nixos.unstable.krebsco.de/unstable2016-07-20-to-stable2016-10-20.html" rel="alternate"></link><published>2016-10-25T18:10:00+02:00</published><updated>2016-10-28T18:10:00+02:00</updated><author><name>makefu</name></author><id>tag:nixos.unstable.krebsco.de,2016-10-25:/unstable2016-07-20-to-stable2016-10-20.html</id><summary type="html">&lt;p&gt;Peer pressure resulted from switching back to 16.09 stable branch
+&lt;code&gt;125ffff -&amp;gt; 31c72ce2&lt;/code&gt;&lt;/p&gt;
+&lt;div class="section" id="new-problems-i-managed-to-solve"&gt;
+&lt;h2&gt;new problems i managed to solve&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Redis does not start up&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Oct 22 15:09:30 gum systemd[1]: Started Redis Server.
+Oct 22 15:09:30 gum redis[28655]: You requested maxclients of 10000 requiring
+at …&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Peer pressure resulted from switching back to 16.09 stable branch
+&lt;code&gt;125ffff -&amp;gt; 31c72ce2&lt;/code&gt;&lt;/p&gt;
+&lt;div class="section" id="new-problems-i-managed-to-solve"&gt;
+&lt;h2&gt;new problems i managed to solve&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Redis does not start up&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Oct 22 15:09:30 gum systemd[1]: Started Redis Server.
+Oct 22 15:09:30 gum redis[28655]: You requested maxclients of 10000 requiring
+at least 10032 max file descriptors.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Fixed with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemd&lt;span class="o"&gt;.&lt;/span&gt;services&lt;span class="o"&gt;.&lt;/span&gt;redis&lt;span class="o"&gt;.&lt;/span&gt;serviceConfig&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="ss"&gt;LimitNOFILE=&lt;/span&gt;&lt;span class="mi"&gt;10032&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;PHPFPM does not start up&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Oct 28 14:00:23 wry systemd[1]: Started phpfpm.service.
+Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: [/nix/store/41h3wh6rmsanmcs880xdw0j17dvwy8s4-phpfpm.conf:22] value is NULL for a ZEND_INI_PARSER_ENTRY
+Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: failed to load configuration file &amp;#39;/nix/store/41h3wh6rmsanmcs880xdw0j17dvwy8s4-phpfpm.conf&amp;#39;
+Oct 28 14:00:31 wry php-fpm[15911]: [28-Oct-2016 14:00:31] ERROR: FPM initialization failed
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Fixed with removing the comment in &lt;cite&gt;services.phpfpm.poolConfigs.euer-wiki&lt;/cite&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gu"&gt;@@ -44,7 +44,6 @@ in {&lt;/span&gt;
+  pm.min_spare_servers = 1
+  pm.max_spare_servers = 3
+  chdir = /
+&lt;span class="gd"&gt;- # errors to journal&lt;/span&gt;
+  php_admin_value[error_log] = &amp;#39;stderr&amp;#39;
+  php_admin_flag[log_errors] = on
+  catch_workers_output = yes
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;systemd --user fails&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;see &lt;a class="reference external" href="https://github.com/NixOS/nixpkgs/issues/15653"&gt;https://github.com/NixOS/nixpkgs/issues/15653&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The issue contains a workaround:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;XDG_RUNTIME_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/run/user/&lt;/span&gt;&lt;span class="nv"&gt;$UID&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; systemctl --user status
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Whoosh is duplicated&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Found duplicated packages in closure for dependency &amp;#39;Whoosh&amp;#39;:
+  Whoosh 2.7.4 (/nix/store/g3siqia7gjjjbwgyhnjyyvnab8sqn0ir-python3.5-Whoosh-2.7.4/lib/python3.5/site-packages)
+  Whoosh 2.7.0 (/nix/store/slb71bk73479ml1xgwcxhk7x9ynlh0wh-python3.5-Whoosh-2.7.0/lib/python3.5/site-packages)
+
+Package duplicates found in closure, see above. Usually this happens if two packages depend on different version of the same dependency.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;solved by removing explicit Whoosh dependency from package description&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Broadcom BCM43b1 stopped working, fixed with:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;boot.kernelModules &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;wl&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="broken-stuff-i-will-fix-by-waiting-for-a-new-release"&gt;
+&lt;h2&gt;broken stuff i will fix by waiting for a new release&lt;/h2&gt;
+&lt;p&gt;None besides the ones from the 125ffff release.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="solved-with-update"&gt;
+&lt;h2&gt;solved with update&lt;/h2&gt;
+&lt;p&gt;Some things actually get solved with the new rev:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;unable to print with SCX-3200&lt;/strong&gt; seems to be fixed with newest stable release.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;BadCOW&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;OpenSSL Bugs*&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</content><category term="unstab-to-stable"></category><category term="125ffff"></category><category term="31c72ce2"></category></entry><entry><title>unstable@2016-09-24`</title><link href="http://nixos.unstable.krebsco.de/unstable2016-09-24.html" rel="alternate"></link><published>2016-09-24T09:41:00+02:00</published><updated>2016-09-24T09:41:00+02:00</updated><author><name>mic92</name></author><id>tag:nixos.unstable.krebsco.de,2016-09-24:/unstable2016-09-24.html</id><summary type="html">&lt;div class="section" id="nix-container-with-ips-break"&gt;
+&lt;h2&gt;Nix-Container with IPs break&lt;/h2&gt;
+&lt;p&gt;Because &lt;cite&gt;b9df84cd&lt;/cite&gt; refactored the syntax of the nix expression,
+building container with private network broke.&lt;/p&gt;
+&lt;p&gt;This [pull request](&lt;a class="reference external" href="https://github.com/NixOS/nixpkgs/pull/18915"&gt;https://github.com/NixOS/nixpkgs/pull/18915&lt;/a&gt;) fix it.&lt;/p&gt;
+&lt;/div&gt;
+</summary><content type="html">&lt;div class="section" id="nix-container-with-ips-break"&gt;
+&lt;h2&gt;Nix-Container with IPs break&lt;/h2&gt;
+&lt;p&gt;Because &lt;cite&gt;b9df84cd&lt;/cite&gt; refactored the syntax of the nix expression,
+building container with private network broke.&lt;/p&gt;
+&lt;p&gt;This [pull request](&lt;a class="reference external" href="https://github.com/NixOS/nixpkgs/pull/18915"&gt;https://github.com/NixOS/nixpkgs/pull/18915&lt;/a&gt;) fix it.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="b9df84cd"></category></entry><entry><title>unstable@2016-09-09`</title><link href="http://nixos.unstable.krebsco.de/unstable2016-09-09.html" rel="alternate"></link><published>2016-09-09T09:55:00+02:00</published><updated>2016-09-09T09:55:00+02:00</updated><author><name>mic92</name></author><id>tag:nixos.unstable.krebsco.de,2016-09-09:/unstable2016-09-09.html</id><summary type="html">&lt;div class="section" id="keyboard-stopped-working"&gt;
+&lt;h2&gt;Keyboard stopped working&lt;/h2&gt;
+&lt;p&gt;Because of linux kernel 4.4.20 the kernel module: i8042 is no longer loaded.
+I added the following to &lt;cite&gt;boot.initrd.availableKernelModules&lt;/cite&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gd"&gt;- boot.initrd.availableKernelModules = [ &amp;quot;xhci_pci&amp;quot; &amp;quot;ehci_pci&amp;quot; &amp;quot;ahci&amp;quot; &amp;quot;usb_storage&amp;quot; &amp;quot;sd_mod&amp;quot; &amp;quot;rtsx_pci_sdmmc&amp;quot; ];&lt;/span&gt;
+&lt;span class="gi"&gt;+ boot.initrd.availableKernelModules = [ &amp;quot;xhci_pci&amp;quot; &amp;quot;ehci_pci&amp;quot; &amp;quot;ahci&amp;quot; &amp;quot;usb_storage&amp;quot; &amp;quot;sd_mod&amp;quot; &amp;quot;rtsx_pci_sdmmc&amp;quot; &amp;quot;i8042&amp;quot; ];&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+</summary><content type="html">&lt;div class="section" id="keyboard-stopped-working"&gt;
+&lt;h2&gt;Keyboard stopped working&lt;/h2&gt;
+&lt;p&gt;Because of linux kernel 4.4.20 the kernel module: i8042 is no longer loaded.
+I added the following to &lt;cite&gt;boot.initrd.availableKernelModules&lt;/cite&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gd"&gt;- boot.initrd.availableKernelModules = [ &amp;quot;xhci_pci&amp;quot; &amp;quot;ehci_pci&amp;quot; &amp;quot;ahci&amp;quot; &amp;quot;usb_storage&amp;quot; &amp;quot;sd_mod&amp;quot; &amp;quot;rtsx_pci_sdmmc&amp;quot; ];&lt;/span&gt;
+&lt;span class="gi"&gt;+ boot.initrd.availableKernelModules = [ &amp;quot;xhci_pci&amp;quot; &amp;quot;ehci_pci&amp;quot; &amp;quot;ahci&amp;quot; &amp;quot;usb_storage&amp;quot; &amp;quot;sd_mod&amp;quot; &amp;quot;rtsx_pci_sdmmc&amp;quot; &amp;quot;i8042&amp;quot; ];&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="bc7e4e39"></category></entry><entry><title>stable@2016-06-11 to unstable@2016-07-20</title><link href="http://nixos.unstable.krebsco.de/stable2016-06-11-to-unstable2016-07-20.html" rel="alternate"></link><published>2016-07-25T14:06:00+02:00</published><updated>2016-08-09T21:15:00+02:00</updated><author><name>makefu</name></author><id>tag:nixos.unstable.krebsco.de,2016-07-25:/stable2016-06-11-to-unstable2016-07-20.html</id><summary type="html">&lt;p&gt;Accidentally updated from stable channel to unstable:
+&lt;code&gt;0546a4a -&amp;gt; 125ffff&lt;/code&gt;&lt;/p&gt;
+&lt;div class="section" id="new-problems-i-managed-to-solve"&gt;
+&lt;h2&gt;new problems i managed to solve&lt;/h2&gt;
+&lt;div class="section" id="xorg-does-not-accept-connections-from-system-users"&gt;
+&lt;h3&gt;Xorg does not accept connections from system users&lt;/h3&gt;
+&lt;p&gt;not sure how long it didn't work but &lt;code&gt;xhost&lt;/code&gt; fixes it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;services.xserver.displayManager.sessionCommands &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+  &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;pkgs&lt;/span&gt;&lt;span class="p"&gt;.xorg.xhost&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/bin/xhost +local:
+&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="msmtp-stopped-working"&gt;
+&lt;h3&gt;msmtp stopped working&lt;/h3&gt;
+&lt;p&gt;trying to start …&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Accidentally updated from stable channel to unstable:
+&lt;code&gt;0546a4a -&amp;gt; 125ffff&lt;/code&gt;&lt;/p&gt;
+&lt;div class="section" id="new-problems-i-managed-to-solve"&gt;
+&lt;h2&gt;new problems i managed to solve&lt;/h2&gt;
+&lt;div class="section" id="xorg-does-not-accept-connections-from-system-users"&gt;
+&lt;h3&gt;Xorg does not accept connections from system users&lt;/h3&gt;
+&lt;p&gt;not sure how long it didn't work but &lt;code&gt;xhost&lt;/code&gt; fixes it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;services.xserver.displayManager.sessionCommands &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+  &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;pkgs&lt;/span&gt;&lt;span class="p"&gt;.xorg.xhost&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/bin/xhost +local:
+&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="msmtp-stopped-working"&gt;
+&lt;h3&gt;msmtp stopped working&lt;/h3&gt;
+&lt;p&gt;trying to start up msmtp results in:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Jul &lt;span class="m"&gt;27&lt;/span&gt; &lt;span class="m"&gt;09&lt;/span&gt;:07:35 omo audit&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;5803&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: ANOM_ABEND &lt;span class="nv"&gt;auid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;9001&lt;/span&gt; &lt;span class="nv"&gt;uid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;9001&lt;/span&gt; &lt;span class="nv"&gt;gid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt; &lt;span class="nv"&gt;ses&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt; &lt;span class="nv"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;5803&lt;/span&gt; &lt;span class="nv"&gt;comm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;msmtp&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;exe&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/nix/store/ic79467gar4ard15z3xwknxwa772gy9q-msmtp-1.6.4/bin/msmtp&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;sig&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;
+Jul &lt;span class="m"&gt;27&lt;/span&gt; &lt;span class="m"&gt;09&lt;/span&gt;:07:35 omo kernel: traps: msmtp&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;5803&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="nb"&gt;trap&lt;/span&gt; invalid opcode ip:7fc95490e18e sp:7ffcf59b2448 error:0 in libgmp.so.10.3.0&lt;span class="o"&gt;[&lt;/span&gt;7fc9548d5000+8f000&lt;span class="o"&gt;]&lt;/span&gt;
+Jul &lt;span class="m"&gt;27&lt;/span&gt; &lt;span class="m"&gt;09&lt;/span&gt;:07:35 omo kernel: audit: &lt;span class="nv"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1701&lt;/span&gt; audit&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1469603255&lt;/span&gt;.865:151&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="nv"&gt;auid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;9001&lt;/span&gt; &lt;span class="nv"&gt;uid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;9001&lt;/span&gt; &lt;span class="nv"&gt;gid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt; &lt;span class="nv"&gt;ses&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt; &lt;span class="nv"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;5803&lt;/span&gt; &lt;span class="nv"&gt;comm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;msmtp&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;exe&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/nix/store/ic79467gar4ard15z3xwknxwa772gy9q-msmtp-1.6.4/bin/msmtp&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;sig&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Just to finish sending my mail I installed old msmtp into user env:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;find /nix/store -name msmtpd -type f
+nix-env -i /nix/store/pzfam2i2kpfdncz8yzyn5bkxq7fmin8z-msmtp-1.6.4/bin/msmtp
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="gpg-agent-stopped-working"&gt;
+&lt;h3&gt;GPG agent stopped working&lt;/h3&gt;
+&lt;p&gt;Seems like in gpg 2.1 write-env-file became obsolete:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg-agent&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;14303&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: WARNING: &lt;span class="s2"&gt;&amp;quot;--write-env-file&amp;quot;&lt;/span&gt; is an obsolete option - it has no effect&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="solution"&gt;
+&lt;h4&gt;Solution&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gd"&gt;--- a/makefu/2configs/zsh-user.nix&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/makefu/2configs/zsh-user.nix&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -22,15 +22,11 @@&lt;/span&gt;
+&lt;span class="gd"&gt;-      # load gpg-agent&lt;/span&gt;
+&lt;span class="gd"&gt;-      envfile=&amp;quot;$HOME/.gnupg/gpg-agent.env&amp;quot;&lt;/span&gt;
+&lt;span class="gd"&gt;-      if [ -e &amp;quot;$envfile&amp;quot; ] &amp;amp;&amp;amp; kill -0 $(grep GPG_AGENT_INFO &amp;quot;$envfile&amp;quot; | cut -d: -f 2) 2&amp;gt;/dev/null; then&lt;/span&gt;
+&lt;span class="gd"&gt;-        eval &amp;quot;$(cat &amp;quot;$envfile&amp;quot;)&amp;quot;&lt;/span&gt;
+&lt;span class="gd"&gt;-      else&lt;/span&gt;
+&lt;span class="gd"&gt;-        eval &amp;quot;$(${pkgs.gnupg}/bin/gpg-agent --daemon --enable-ssh-support --write-env-file &amp;quot;$envfile&amp;quot;)&amp;quot;&lt;/span&gt;
+&lt;span class="gd"&gt;-      fi&lt;/span&gt;
+&lt;span class="gd"&gt;-      export GPG_AGENT_INFO&lt;/span&gt;
+&lt;span class="gd"&gt;-      export SSH_AUTH_SOCK&lt;/span&gt;
+&lt;span class="gi"&gt;+      ${pkgs.gnupg}/bin/gpg-connect-agent updatestartuptty /bye &amp;gt;/dev/null&lt;/span&gt;
+&lt;span class="gi"&gt;+      GPG_TTY=$(tty)&lt;/span&gt;
+&lt;span class="gi"&gt;+      export GPG_TTY&lt;/span&gt;
+&lt;span class="gi"&gt;+      unset SSH_AGENT_PID&lt;/span&gt;
+&lt;span class="gi"&gt;+      export SSH_AUTH_SOCK=&amp;quot;/run/user/$UID/gnupg/S.gpg-agent.ssh&amp;quot;&lt;/span&gt;
+      &amp;#39;&amp;#39;;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="touchpad-enabled-on-x220-but-in-retard-mode"&gt;
+&lt;h3&gt;Touchpad enabled on X220 but in retard mode&lt;/h3&gt;
+&lt;p&gt;I use the trackpoint instead, before it was disabled by default.&lt;/p&gt;
+&lt;div class="section" id="id1"&gt;
+&lt;h4&gt;Solution&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gd"&gt;--- a/makefu/2configs/hw/tp-x2x0.nix&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/makefu/2configs/hw/tp-x2x0.nix&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -12,6 +12,12 @@&lt;/span&gt;
+&lt;span class="gi"&gt;+  # enable synaptics so we can easily disable the touchpad&lt;/span&gt;
+&lt;span class="gi"&gt;+  #   enable the touchpad with `synclient TouchpadOff=0`&lt;/span&gt;
+&lt;span class="gi"&gt;+  services.xserver.synaptics = {&lt;/span&gt;
+&lt;span class="gi"&gt;+    enable = true;&lt;/span&gt;
+&lt;span class="gi"&gt;+    additionalOptions = &amp;#39;&amp;#39;Option &amp;quot;TouchpadOff&amp;quot; &amp;quot;1&amp;quot;&amp;#39;&amp;#39;;&lt;/span&gt;
+&lt;span class="gi"&gt;+  };&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="devpi-stopped-building"&gt;
+&lt;h3&gt;Devpi stopped building&lt;/h3&gt;
+&lt;p&gt;Tests are activated by default for python packages. For some reason my devpi
+package contains failing tests, too lazy to investigate.&lt;/p&gt;
+&lt;div class="section" id="workaround"&gt;
+&lt;h4&gt;Workaround&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gd"&gt;--- a/makefu/5pkgs/devpi/default.nix&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/makefu/5pkgs/devpi/default.nix&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -8,7 +8,7 @@ let&lt;/span&gt;
+      url = &amp;quot;https://pypi.python.org/packages/source/e/execnet/${name}.tar.gz&amp;quot;;
+      sha256 = &amp;quot;1rpk1vyclhg911p3hql0m0nrpq7q7mysxnaaw6vs29cpa6kx8vgn&amp;quot;;
+    };
+&lt;span class="gd"&gt;-&lt;/span&gt;
+&lt;span class="gi"&gt;+    doCheck = false;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="deprecated-nixpkgs-options"&gt;
+&lt;h3&gt;Deprecated nixpkgs options&lt;/h3&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;services.xserver.vaapiDrivers&lt;/tt&gt; became &lt;tt class="docutils literal"&gt;hardware.opengl.extraPackages&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;nix.useChroot&lt;/tt&gt; became &lt;tt class="docutils literal"&gt;nix.useSandbox&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;services.iodined.*&lt;/tt&gt; became &lt;tt class="docutils literal"&gt;services.iodined.server&lt;/tt&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gd"&gt;--- a/makefu/2configs/default.nix&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/makefu/2configs/default.nix&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -66,7 +66,7 @@&lt;/span&gt;
+&lt;span class="gd"&gt;-  nix.useChroot = true;&lt;/span&gt;
+&lt;span class="gi"&gt;+  nix.useSandbox = true;&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/makefu/2configs/hw/tp-x220.nix&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/makefu/2configs/hw/tp-x220.nix&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -8,10 +8,9 @@&lt;/span&gt;
+&lt;span class="gd"&gt;-&lt;/span&gt;
+&lt;span class="gi"&gt;+  hardware.opengl.extraPackages =  [ pkgs.vaapiIntel pkgs.vaapiVdpau ];&lt;/span&gt;
+  services.xserver = {
+    videoDriver = &amp;quot;intel&amp;quot;;
+&lt;span class="gd"&gt;-    vaapiDrivers = [ pkgs.vaapiIntel pkgs.vaapiVdpau ];&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/makefu/2configs/iodined.nix&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/makefu/2configs/iodined.nix&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -8,9 +8,11 @@ in {&lt;/span&gt;
+
+  services.iodined = {
+    enable = true;
+&lt;span class="gd"&gt;-    domain = domain;&lt;/span&gt;
+&lt;span class="gd"&gt;-    ip = &amp;quot;172.16.10.1/24&amp;quot;;&lt;/span&gt;
+&lt;span class="gd"&gt;-    extraConfig = &amp;quot;-P ${pw} -l ${config.krebs.build.host.nets.internet.ip4.addr}&amp;quot;;&lt;/span&gt;
+&lt;span class="gi"&gt;+    server = {&lt;/span&gt;
+&lt;span class="gi"&gt;+      domain = domain;&lt;/span&gt;
+&lt;span class="gi"&gt;+      ip = &amp;quot;172.16.10.1/24&amp;quot;;&lt;/span&gt;
+&lt;span class="gi"&gt;+      extraConfig = &amp;quot;-P ${pw} -l ${config.krebs.build.host.nets.internet.ip4.addr}&amp;quot;;&lt;/span&gt;
+&lt;span class="gi"&gt;+    };&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="broken-stuff-i-will-fix-by-waiting-for-a-new-release"&gt;
+&lt;h2&gt;broken stuff i will fix by waiting for a new release&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;Xorg takes 10 seconds to boot&lt;/strong&gt; -
+I do not boot too often, will have this solved via enterprise-waiting.
+UPDATE: i think this is related to vboxnet0 to time out after 1min 30sec&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Screen flickers when root user logs in&lt;/strong&gt; -
+Redshift is now a systemd user service which results in redshift starting up
+at connect. Will not do anything.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;systemd --user fails&lt;/strong&gt; -
+see &lt;a class="reference external" href="https://github.com/NixOS/nixpkgs/issues/15653"&gt;https://github.com/NixOS/nixpkgs/issues/15653&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;cannot print anymore on Samsung SCX-3200 Printer&lt;/strong&gt; - overwriting cups and
+cups_filters results in mass rebuild for my unstable revision&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="solved-with-update"&gt;
+&lt;h2&gt;solved with update&lt;/h2&gt;
+&lt;p&gt;Some things actually get solved with the new rev:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;chromium does not use up all 4 CPUs when showing videos&lt;/li&gt;
+&lt;li&gt;nixos module &lt;a class="reference external" href="https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/security/acme.nix#L117"&gt;security.acme&lt;/a&gt; provides &lt;code&gt;preliminarySelfsigned&lt;/code&gt; for automated ssl certificate creation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</content><category term="stable-to-unstable"></category><category term="125ffff"></category><category term="0546a4a"></category></entry><entry><title>Blog Introduction</title><link href="http://nixos.unstable.krebsco.de/blog-introduction.html" rel="alternate"></link><published>2016-07-21T11:02:00+02:00</published><updated>2016-07-25T14:06:00+02:00</updated><author><name>makefu</name></author><id>tag:nixos.unstable.krebsco.de,2016-07-21:/blog-introduction.html</id><summary type="html">&lt;p&gt;I decided i will share my adventures through &lt;a class="reference external" href="https://nixos.org/"&gt;NixOS&lt;/a&gt; and
+more specifically following either the &lt;a class="reference external" href="https://nixos.org/nixos/manual/index.html#sec-upgrading"&gt;NixOS Unstable Channel&lt;/a&gt; or the Latest NixOS Stable Channel.&lt;/p&gt;
+&lt;p&gt;The Blog posts will contain the Git Hash and the time i updated. It will be mostly a short problem description and how (or how not …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I decided i will share my adventures through &lt;a class="reference external" href="https://nixos.org/"&gt;NixOS&lt;/a&gt; and
+more specifically following either the &lt;a class="reference external" href="https://nixos.org/nixos/manual/index.html#sec-upgrading"&gt;NixOS Unstable Channel&lt;/a&gt; or the Latest NixOS Stable Channel.&lt;/p&gt;
+&lt;p&gt;The Blog posts will contain the Git Hash and the time i updated. It will be mostly a short problem description and how (or how not) i fixed it all together with code blocks and links to extra descriptions. I will try to convince more people becoming contributors to this blog.&lt;/p&gt;
+&lt;p&gt;The sources can be found in a dedicated &lt;a class="reference external" href="https://github.com/krebscode/nixos.unstable.krebsco.de"&gt;Github Repository&lt;/a&gt; ,the website gets deployed by &lt;a class="reference external" href="https://travis-ci.org/krebscode/nixos.unstable.krebsco.de/"&gt;Travis CI&lt;/a&gt; and delivered via the &lt;a class="reference external" href="https://pages.github.com/"&gt;Github Pages CDN&lt;/a&gt;&lt;/p&gt;
+</content><category term="nixos"></category><category term="unstable"></category><category term="stable"></category><category term="intro"></category></entry></feed>
