@@ -1,0 +1,40 @@
+``stable@2016-10-20`` to ``unstable@2017-02-04``
+####################################################
+:date: 2017-02-04 15:00
+:modified: 2017-02-04 15:00
+:author: makefu
+:tags: unstable-to-stable, 31c72ce2, f66d7823
+
+Mic92 convinced me to try out unstable again.
+:code:`31c72ce2 -> f66d7823`
+
+new problems i managed to solve
+-------------------------------
+**awesome4.0 introduced breaking api changes**
+
+Due to the fact that the whole awesomecfg is code, everything exploded. My
+temporary solution was to replace some of the old config default parts with the
+new ones from the default config but it was no fun.
+Some stuff is marked as deprecated (:code:`use gears instead`) but i have no idea
+how.
+
+ * Full diff: http://cgit.euer.krebsco.de/stockholm/commit/?id=0ef6adccc7a9bcbff99fbe093593aa95a8eae7fa
+ * Documentation on github for the awesomewm change: https://github.com/awesomeWM/awesome/issues/967
+ * New Guides for default config: https://awesomewm.org/apidoc/documentation/05-awesomerc.md.html
+
+Testing new awesome config via:
+
+.. code-block:: bash
+
+  Xephyr :1 -ac -br -noreset -screen 800x600
+  DISPLAY=:1.0 awesome -c ~/rc.lua
+
+
+broken stuff i will fix by waiting for a new release
+----------------------------------------------------
+
+new and solved with update
+--------------------------
+
+* **services.journalbeat**
+* **Grafana 4.1** - JUST WORKED!
